@@ -42,11 +42,18 @@
 
   /*********************************************** HEADER ***********************************************/
   header {
-    height: 80px;
+    height: 12vh;
   }
   .my-list{
     display: flex;
-    
+    flex: auto;
+    float: left;
+  }
+
+  .my-list .add-task-list{
+    font-size: 25px;
+    margin-top: 5px;
+    color: #dddee2;
   }
 
   .profile-menu {
@@ -54,7 +61,7 @@
     justify-content: center;
     align-items: center;
     float: right;
-    height: 80px;
+    height: 12vh;
     padding: 10px;
   }
 
@@ -82,4 +89,9 @@
     background: #394264;
     border-radius: 5px;
     position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: center;
   }

@@ -3,9 +3,9 @@ import './Task.css';
 const Task = props => 
 {
     return (
-        <div class="card">
+        <div className="card">
             <header>{props.title}</header>
-            <div class="detail">{props.percent}</div>
+            <div className="detail">{props.percent}</div>
         </div>
     );
 }
