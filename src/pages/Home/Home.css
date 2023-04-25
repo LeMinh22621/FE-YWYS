@@ -12,38 +12,12 @@
   .scnd-font-color {
     color: #9099b7;
   }
-
   .horizontal-list {
     margin: 0;
     padding: 0;
     list-style-type: none;
   }
 
-  .profile-picture {
-    border-radius: 100%;
-    overflow: hidden;
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-  }
-
-  .big-profile-picture {
-    margin: 0 auto;
-    border: 5px solid #50597b;
-    width: 150px;
-    height: 150px;
-  }
-
-  .small-profile-picture {
-    border: 2px solid #50597b;
-    width: 40px;
-    height: 40px;
-  }
-
-  /*********************************************** HEADER ***********************************************/
-  header {
-    height: 12vh;
-  }
   .my-list{
     display: flex;
     flex: auto;
@@ -55,43 +29,7 @@
     margin-top: 5px;
     color: #dddee2;
   }
-
-  .profile-menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    float: right;
-    height: 12vh;
-    padding: 10px;
-  }
-
-  .profile-menu p {
-    font-size: 17px;
-    display: inline-block;
-    margin: 0;
-    padding-right: 10px;
-  }
-
-  .profile-menu a {
-    padding-left: 5px;
-  }
-
-  .profile-menu a:hover {
-    text-decoration: none;
-  }
-
-  .small-profile-picture {
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  .block {
-    background: #394264;
-    border-radius: 5px;
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-    align-items: center;
+  .my-list .add-task-list:hover{
+    color: #aaabad;
+    cursor: pointer;
   }

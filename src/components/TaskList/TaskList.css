@@ -5,6 +5,7 @@
     margin: 5px 5px;
     padding: 10px;
     width: 23vw;
+    height: fit-content;
     cursor: grab;
 }
 
