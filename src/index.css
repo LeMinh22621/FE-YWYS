@@ -2,7 +2,7 @@ body {
   margin: 0;
   font: 14px/18px "Helvetica Neue", Arial, Helvetica, sans-serif;
   /* background: linear-gradient(45deg, #eb7535, #3d7bee, #23d573, #6edff3); */
-  background-size: 1000% 1000%;
+  /* background-size: 1000% 1000%; */
   animation: gradient 3s ease infinite;
 }
 

@@ -9,7 +9,7 @@
     cursor: grab;
 }
 
-.is-grabbing {
+.is_grabbing {
     opacity: 0.8;
     cursor: grabbing;
 }
@@ -20,20 +20,20 @@
     line-height: 18px;
     cursor: auto;
 }
-.list .task-list-header{
+.list .task_list_header{
     display: flex; /* enable flexbox layout */
     flex-direction: row; /* arrange elements in a row */
     justify-content: space-between;
     font-size: 20px;
 }
-.list .task-list-header .plus-icon{
+.list .task_list_header .plus_icon{
     color: #b6b3b3;
 }
-.list .task-list-header .plus-icon:hover{
+.list .task_list_header .plus_icon:hover{
     color: #6b6a6a;
     cursor: pointer;
 }
-.list .task-list-header>header{
+.list .task_list_header>header{
     width: fit-content;
     height: 30px;
     font-weight: bold;

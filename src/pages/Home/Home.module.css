@@ -18,18 +18,18 @@
     list-style-type: none;
   }
 
-  .my-list{
+  .my_list{
     display: flex;
     flex: auto;
     float: left;
   }
 
-  .my-list .add-task-list{
+  .my_list .add_task_list{
     font-size: 25px;
     margin-top: 5px;
     color: #dddee2;
   }
-  .my-list .add-task-list:hover{
+  .my_list .add_task_list:hover{
     color: #aaabad;
     cursor: pointer;
   }

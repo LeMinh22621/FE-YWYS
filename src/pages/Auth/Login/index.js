@@ -17,16 +17,11 @@ const Login = () => {
 
   const from = location.state?.from?.pathname || "/";
   
-  // const userRef = useRef();
   const errRef = useRef();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errMessage, setErrMessage] = useState('');
-
-  // useEffect( () => {
-  //   userRef.current.focus();
-  // }, []);
 
   useEffect( () => {
     setErrMessage('');
