@@ -1,11 +1,11 @@
 import { Navigate } from "react-router-dom"
-import { useAuth } from "../hooks/useAuth"
-
+// import { useAuth } from "../hooks/useAuth"
+import { isAuthenticated } from "../utils/auth"
 
 export const RequireAuth = ({children}) => {
-    const auth = useAuth()
+    // const auth = useAuth()
 
-    if(!auth)// || auth.isExpiredToken())
+    if(!isAuthenticated())
     {
         return <Navigate to='/login'/>
     }

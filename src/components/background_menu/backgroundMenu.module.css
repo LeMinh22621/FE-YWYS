@@ -1,7 +1,7 @@
 .background_menu_container
 {
     height: auto;
-    max-width: 30vw;
+    width: 20vw;
     background-color:  rgba(0, 0, 0, 0.5);
     border-radius: 20px;
 }
@@ -9,11 +9,12 @@
 {
     height: 100%;
     width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
     border-radius: 30px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-content: center;
     justify-content: center;
     align-items: center;
 }

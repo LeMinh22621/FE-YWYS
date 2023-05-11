@@ -1,6 +1,7 @@
 .slider_container {
   width: 80%;
-  height: 200px;
+  height: 20vh;
+  width: 18vw;
   position: relative;
   overflow: hidden;
 }

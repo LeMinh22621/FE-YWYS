@@ -1,8 +1,37 @@
 import React from "react";
-import styles from './background_menu.module.css';
+import styles from './backgroundMenu.module.css';
 import BackgroundSlide from "../background_slide/BackgroundSlide";
 
+import roomApi from "../../api/roomApi";
+
+const fetchData = async (payload) => {
+
+    try{
+        const { themeId, token } = payload;
+
+        const respone = await roomApi.getBackgrondListByThemeId(themeId, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        })
+        return respone.message;
+    }
+    catch(err)
+    {
+        alert(err.message);
+    }
+}
+
 const BackgroundMenu = props => {
+
+    const payload = {
+        themeId: "0ea23b23-a38d-4f40-9111-22517afb0ec6",
+        token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaG0yazFAZ21haWwuY29tIiwiaWF0IjoxNjgzNzA4Mjc1LCJleHAiOjE2ODM3MzcwNzV9.L0g2gfR_BQ74S4BrTbfuL3uMrqDEN5YHsChm2vy4P8E"
+    };
+
+    const response = fetchData(payload);
+    console.log(response);
+
     const images = [
         {index: 0, url: "http://placekitten.com/g/400/200", caption: "caption 1"},
         {index: 1, url: "https://placekitten.com/500/200", caption: "caption 2"},

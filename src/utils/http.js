@@ -1,5 +1,6 @@
 import axios from 'axios'
-
+import { getToken } from './auth'
+import { TOKEN_KEY } from './auth'
 class Http{
     constructor()
     {
@@ -22,14 +23,18 @@ class Http{
             error => {
                 // eslint-disable-next-line
                 if(error.response.status === 403){
-                    localStorage.removeItem('token')
-                    localStorage.removeItem('user')
+                    localStorage.removeItem(TOKEN_KEY);
                 }
                 return Promise.reject(error.response.data)
             }
         )
         this.instance.interceptors.request.use(
-            config => {
+            (config) => {
+                const token = getToken();
+                if(token)
+                {
+                    config.headers.Authorization = `Bearer ${token}`;
+                }
                 return config;
             },
             error => {

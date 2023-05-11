@@ -4,10 +4,44 @@ import * as FaIcon from 'react-icons/fa';
 import * as TFIIcon from 'react-icons/tfi';
 
 import BackgroundMenu from "../background_menu/BackgroundMenu";
+import MotivationalQuote from "../motivational_quote/MotivationalQuote";
+import MotivationalQuoteDropdown from "../motivational_quote_dropdown/motivational_quote/MotivationalQuoteDropdown";
+import roomApi from "../../api/roomApi";
+
+const fetchData = async (SetMotivationalQuoteData, token) => {
+    try{
+        const respone = await roomApi.getRandomMotivationQuote( {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        })
+        SetMotivationalQuoteData(respone.data);
+        return respone.data;
+    }
+    catch(err)
+    {
+        alert(err.message);
+    }
+}
+
 const Room = props => {
 
     const [isImageIconOpen, SetIsImageIconOpen] = useState(false);
+    const [isQuoteIconClicked, SetIsQuoteIconClicked] = useState(false);
+    const [isHiddenQuote, SetIsHiddenQuote] = useState(true);
+    const [motivationalQuoteData, SetMotivationalQuoteData] = useState({});
 
+
+    const shuffleQuote = () => {
+        const response = fetchData(SetMotivationalQuoteData, "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaG0yazFAZ21haWwuY29tIiwiaWF0IjoxNjgzNzkwMjIzLCJleHAiOjE2ODM4MTkwMjN9.mI7me9-GUp9HpDbgDjHP4RonDjvYm5WR2sG6j9zs6oM");
+        console.log(response);
+    }
+    const hiddenQuoteClick = () => {
+        SetIsHiddenQuote(!isHiddenQuote);
+    }
+    const toggleQuoteClick = () => {
+        SetIsQuoteIconClicked(!isQuoteIconClicked);
+    }
     const toggleImageMenu = () => {
         SetIsImageIconOpen(!isImageIconOpen);
     };
@@ -28,7 +62,7 @@ const Room = props => {
                                 <FaIcon.FaTasks className={styles.header_icon} size={35} />
                             </li>
                             <li>
-                                <FaIcon.FaQuoteRight className={styles.header_icon} size={20} />
+                                <FaIcon.FaQuoteRight onClick={toggleQuoteClick} className={styles.header_icon} size={20} />
                             </li>
                         </ul>
                     </div>
@@ -39,6 +73,16 @@ const Room = props => {
                         // background menu
                         isImageIconOpen && (
                             <BackgroundMenu/>
+                        )
+                    }
+                    {
+                        isQuoteIconClicked && (
+                            <MotivationalQuoteDropdown shuffleQuote = {shuffleQuote} hiddenQuoteClick = {hiddenQuoteClick}/>
+                        )
+                    }
+                    {
+                        isHiddenQuote && (
+                            <MotivationalQuote motivationalQuoteData={motivationalQuoteData}/>
                         )
                     }
                 </div>

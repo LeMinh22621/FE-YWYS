@@ -4,6 +4,7 @@ import * as IoIcons from 'react-icons/io';
 import { useAuth } from '../../../hooks/useAuth';
 import authApi from '../../../api/authApi';
 import '../Login/index.css';
+import { setToken } from '../../../utils/auth';
 
 const Login = () => {
 
@@ -29,7 +30,6 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
       // send request login to server
       const response = await authApi.login({email, password});
@@ -37,6 +37,7 @@ const Login = () => {
       console.log(response?.token);
 
       const accessToken = response?.token;
+      setToken(accessToken);
 
       setAuth({ email, password, accessToken });
       setEmail('');
