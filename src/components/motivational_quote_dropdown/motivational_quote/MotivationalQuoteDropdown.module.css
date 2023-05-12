@@ -1,0 +1,43 @@
+.motivational_quote_dropdown_container {
+    height: fit-content;
+    width: fit-content;
+    position: absolute;
+    z-index: 100;
+    top: 15%;
+    left: 95%;
+}
+
+.motivational_quote_dropdown_container_wrapper {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.motivational_quote_dropdown_container_wrapper ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.motivational_quote_dropdown_container_wrapper li {
+    display: flex;
+    align-items: center;
+    align-content: space-between;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.3s ease;
+}
+
+.motivational_quote_dropdown_container_wrapper li:hover {
+    border-bottom-color: #333;
+    cursor: pointer;
+}

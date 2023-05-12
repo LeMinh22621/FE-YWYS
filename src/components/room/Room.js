@@ -7,6 +7,7 @@ import BackgroundMenu from "../background_menu/BackgroundMenu";
 import MotivationalQuote from "../motivational_quote/MotivationalQuote";
 import MotivationalQuoteDropdown from "../motivational_quote_dropdown/motivational_quote/MotivationalQuoteDropdown";
 import roomApi from "../../api/roomApi";
+import { useEffect } from "react";
 
 const fetchData = async (SetMotivationalQuoteData, token) => {
     try{
@@ -31,7 +32,6 @@ const Room = props => {
     const [isHiddenQuote, SetIsHiddenQuote] = useState(true);
     const [motivationalQuoteData, SetMotivationalQuoteData] = useState({});
 
-
     const shuffleQuote = () => {
         const response = fetchData(SetMotivationalQuoteData, "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaG0yazFAZ21haWwuY29tIiwiaWF0IjoxNjgzNzkwMjIzLCJleHAiOjE2ODM4MTkwMjN9.mI7me9-GUp9HpDbgDjHP4RonDjvYm5WR2sG6j9zs6oM");
         console.log(response);
@@ -46,6 +46,9 @@ const Room = props => {
         SetIsImageIconOpen(!isImageIconOpen);
     };
 
+    useEffect( () => {
+        shuffleQuote();
+    },[]);
     return (
         <div className={styles.room_container}>
             <div className={styles.room_container_wrapper}>
@@ -66,8 +69,13 @@ const Room = props => {
                             </li>
                         </ul>
                     </div>
+                    {
+                        isQuoteIconClicked && (
+                            <MotivationalQuoteDropdown shuffleQuote = {shuffleQuote} hiddenQuoteClick = {hiddenQuoteClick}/>
+                        )
+                    }
                 </div>
-                <div>
+                <>
                     <h1> This is header</h1>
                     {
                         // background menu
@@ -76,16 +84,11 @@ const Room = props => {
                         )
                     }
                     {
-                        isQuoteIconClicked && (
-                            <MotivationalQuoteDropdown shuffleQuote = {shuffleQuote} hiddenQuoteClick = {hiddenQuoteClick}/>
-                        )
-                    }
-                    {
                         isHiddenQuote && (
                             <MotivationalQuote motivationalQuoteData={motivationalQuoteData}/>
                         )
                     }
-                </div>
+                </>
             </div>
 
         </div>

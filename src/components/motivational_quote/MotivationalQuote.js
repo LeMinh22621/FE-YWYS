@@ -5,8 +5,7 @@ const MotivationalQuote = props => {
     return (
         <div className={styles.motivational_quote_container}>
             <div className={styles.motivational_quote_container_wrapper}>
-                <h2>{props.motivationalQuoteData.content}</h2>
-                <h3>{props.motivationalQuoteData.author}</h3>
+                <span>"{props.motivationalQuoteData.content}" from {props.motivationalQuoteData.author}</span>
             </div>
         </div>
     );
