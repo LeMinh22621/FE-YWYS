@@ -2,12 +2,18 @@
     height: fit-content;
     width: fit-content;
     background-color: transparent;
+    position: fixed;
+    top: 10rem;
+    left: 2rem;
 }
 .motivational_quote_container_wrapper
 {
     height: fit-content;
     width: fit-content;
     background-color: transparent;
+    /* position: fixed;
+    top: 6rem;
+    left: 2rem; */
 }
 .motivational_quote_container_wrapper>span{
     font-size: 1.2rem;

@@ -8,10 +8,11 @@ import MotivationalQuote from "../motivational_quote/MotivationalQuote";
 import MotivationalQuoteDropdown from "../motivational_quote_dropdown/motivational_quote/MotivationalQuoteDropdown";
 import roomApi from "../../api/roomApi";
 import { useEffect } from "react";
+import Timer from "../timer/Timer";
 
 const fetchData = async (SetMotivationalQuoteData, token) => {
-    try{
-        const respone = await roomApi.getRandomMotivationQuote( {
+    try {
+        const respone = await roomApi.getRandomMotivationQuote({
             headers: {
                 Authorization: `Bearer ${token}`,
             }
@@ -19,8 +20,7 @@ const fetchData = async (SetMotivationalQuoteData, token) => {
         SetMotivationalQuoteData(respone.data);
         return respone.data;
     }
-    catch(err)
-    {
+    catch (err) {
         alert(err.message);
     }
 }
@@ -30,6 +30,7 @@ const Room = props => {
     const [isImageIconOpen, SetIsImageIconOpen] = useState(false);
     const [isQuoteIconClicked, SetIsQuoteIconClicked] = useState(false);
     const [isHiddenQuote, SetIsHiddenQuote] = useState(true);
+    const [isTimerClicked, SetIsTimerClicked] = useState(false);
     const [motivationalQuoteData, SetMotivationalQuoteData] = useState({});
 
     const shuffleQuote = () => {
@@ -39,6 +40,10 @@ const Room = props => {
     const hiddenQuoteClick = () => {
         SetIsHiddenQuote(!isHiddenQuote);
     }
+    const toggleTimerClick = () => {
+        SetIsQuoteIconClicked(false);
+        SetIsTimerClicked(!isTimerClicked)
+    }
     const toggleQuoteClick = () => {
         SetIsQuoteIconClicked(!isQuoteIconClicked);
     }
@@ -46,9 +51,9 @@ const Room = props => {
         SetIsImageIconOpen(!isImageIconOpen);
     };
 
-    useEffect( () => {
+    useEffect(() => {
         shuffleQuote();
-    },[]);
+    }, []);
     return (
         <div className={styles.room_container}>
             <div className={styles.room_container_wrapper}>
@@ -59,7 +64,7 @@ const Room = props => {
                                 <FaIcon.FaImage onClick={toggleImageMenu} className={styles.header_icon} size={35} />
                             </li>
                             <li>
-                                <TFIIcon.TfiTimer className={styles.header_icon} size={35} />
+                                <TFIIcon.TfiTimer onClick={toggleTimerClick} className={styles.header_icon} size={35} />
                             </li>
                             <li>
                                 <FaIcon.FaTasks className={styles.header_icon} size={35} />
@@ -68,24 +73,29 @@ const Room = props => {
                                 <FaIcon.FaQuoteRight onClick={toggleQuoteClick} className={styles.header_icon} size={20} />
                             </li>
                         </ul>
+                        {
+                            isQuoteIconClicked && (
+                                <MotivationalQuoteDropdown shuffleQuote={shuffleQuote} hiddenQuoteClick={hiddenQuoteClick} />
+                            )
+                        }
+                        {
+                            isTimerClicked && (
+                                <Timer/>
+                            )
+                        }
                     </div>
-                    {
-                        isQuoteIconClicked && (
-                            <MotivationalQuoteDropdown shuffleQuote = {shuffleQuote} hiddenQuoteClick = {hiddenQuoteClick}/>
-                        )
-                    }
                 </div>
                 <>
                     <h1> This is header</h1>
                     {
                         // background menu
                         isImageIconOpen && (
-                            <BackgroundMenu/>
+                            <BackgroundMenu />
                         )
                     }
                     {
                         isHiddenQuote && (
-                            <MotivationalQuote motivationalQuoteData={motivationalQuoteData}/>
+                            <MotivationalQuote motivationalQuoteData={motivationalQuoteData} />
                         )
                     }
                 </>

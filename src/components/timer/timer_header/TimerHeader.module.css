@@ -1,0 +1,15 @@
+.header_container{
+    height: 20%;
+    width: 100%;
+}
+.header_container_wrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.dropdown_container{
+    height: 100%;
+    width: fit-content;
+    background-color: aquamarine;
+}
