@@ -5,16 +5,11 @@ import * as VSCIcons from 'react-icons/vsc';
 
 const TimerPersonal = props => {
     const labels = ['Focus', 'Break', 'Long Break'];
-    const [timeLine, SetTimeLine] = useState({
-        "focus": 1800,
-        "shortBreak": 300,
-        "longBreak": 900
-    });
-    const [loopTimes, SetLoopTimes] = useState(4);
+    const timeLine = props.timeLine;
 
     const [currentLabel, SetCurrentLabel] = useState(labels[0]);
-    const [counterTimer, SetCounterTimer] = useState(1800);
-    const [currentLoop, SetCurrentLoop] = useState(0);
+    const [counterTimer, SetCounterTimer] = useState(timeLine.focus);
+    const [currentLoop, SetCurrentLoop] = useState(1);
 
     const [isRunning, SetIsRunning] = useState(false);
 
@@ -29,43 +24,49 @@ const TimerPersonal = props => {
         SetIsRunning(!isRunning);
     }
     const handleRestart = () => {
-        SetCounterTimer(3);
-        SetCurrentLoop(0);
+        SetCounterTimer(timeLine.focus);
+        SetCurrentLoop(1);
         SetCurrentLabel(labels[0]);
     }
+    useEffect( () => {
+        if(currentLabel === 'Focus')
+            SetCounterTimer(timeLine.focus);
+    }, [currentLabel, timeLine.focus]);
+    useEffect( () => {
+        if(currentLabel === 'Short Break')
+            SetCounterTimer(timeLine.shortBreak);
+    }, [currentLabel, timeLine.shortBreak]);
+    useEffect( () => {
+        if(currentLabel === 'Long Break')
+            SetCounterTimer(timeLine.longBreak);
+    }, [currentLabel, timeLine.longBreak]);
+
     useEffect(() => {
         let interval = null;
         if (isRunning) {
             if (counterTimer === 0) {
-
-                // console.log("counterTimer: " + counterTimer + ", currentLoop: " + currentLoop + ", currentLabel: " + currentLabel);
-
-                if (currentLabel === labels[0])
-                {
-                    SetCurrentLabel(labels[1]);
+                if (currentLabel === 'Focus') {
+                    SetCurrentLabel('Short Break');
                     SetCounterTimer(timeLine.shortBreak);
                 }
-                else if (currentLabel === labels[1]) {
-                    if (currentLoop < loopTimes) {
+                else if (currentLabel === 'Short Break') {
+                    if (currentLoop < timeLine.loopTimes) {
                         SetCurrentLoop(currentLoop => currentLoop + 1);
-                        SetCurrentLabel(labels[0])
+                        SetCurrentLabel('Focus')
                         SetCounterTimer(timeLine.focus);
                         console.log(currentLoop);
                     }
                     else {
-                        SetCurrentLoop(0);
-                        SetCurrentLabel(labels[2])
+                        SetCurrentLabel('Long Break')
                         SetCounterTimer(timeLine.longBreak);
                     }
                 }
-                else if (currentLabel === labels[2]){
-                    SetCurrentLoop(0);
-                    SetCurrentLabel(labels[0])
+                else if (currentLabel === 'Long Break') {
+                    SetCurrentLoop(1);
+                    SetCurrentLabel('Focus')
                     SetCounterTimer(timeLine.focus);
                 }
-
             }
-
             interval = setInterval(() => {
                 SetCounterTimer(prevTime => prevTime - 1);
             }, 1000);
@@ -75,22 +76,27 @@ const TimerPersonal = props => {
         }
 
         return () => clearInterval(interval);
-    }, [isRunning, currentLoop, currentLabel, loopTimes, counterTimer, labels, timeLine]);
+    }, [isRunning, currentLoop, currentLabel, counterTimer, timeLine]);
 
     return (
         <div className={styles.container}>
             <div className={styles.container_wrapper}>
-                <div className={styles.counter_container}>
-                    <div className={styles.counter_container_wrapper}>
-                        <h1>{formattedMinutes} : {formattedSeconds}</h1>
+                <div className={styles.row_one_container}>
+                    <div className={styles.counter_container}>
+                        <div className={styles.counter_container_wrapper}>
+                            <h1>{formattedMinutes} : {formattedSeconds}</h1>
+                        </div>
+                    </div>
+                    <h1>{currentLabel}</h1>
+                    <div className={styles.buttons_container}>
+                        {
+                            !isRunning ? <BSIcons.BsPlayCircle onClick={handlePlayButtonClick} size={30} /> : <BSIcons.BsPauseCircle onClick={handlePlayButtonClick} size={30} />
+                        }
+                        <VSCIcons.VscDebugRestart onClick={handleRestart} size={30} />
                     </div>
                 </div>
-                <h1>{currentLabel}</h1>
-                <div className={styles.buttons_container}>
-                    {
-                        !isRunning ? <BSIcons.BsPlayCircle onClick={handlePlayButtonClick} size={30} /> : <BSIcons.BsPauseCircle onClick={handlePlayButtonClick} size={30} />
-                    }
-                    <VSCIcons.VscDebugRestart onClick={handleRestart} size={30} />
+                <div className={styles.row_two_container}>
+                    <h2>{currentLoop}/{timeLine.loopTimes}</h2>
                 </div>
             </div>
         </div>
