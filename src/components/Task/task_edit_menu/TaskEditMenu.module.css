@@ -1,26 +1,33 @@
-.menu_more_container{
+.menu_container{
     width: 10vw;
     height: fit-content;
     background-color: transparent;
     cursor: default;
     position: absolute;
-    margin-top: 15vh;
-    margin-left: 12vw;
+    margin-top: 10vh;
+    margin-left: 21vw;
 }
-.menu_more_container_wrapper{
+.menu_container_wrapper{
     display: flex;
     flex-direction: column;
     padding: 5px;
     gap: 10px;
 }
-.menu_more_item{
+.menu_item{
+    display: flex;
+    flex-direction: row;
     background-color: aliceblue;
     border-radius: 5px;
     text-align: start;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.5rem;
 }
-.menu_more_item:hover{
+.menu_item:hover{
     background-color: rgb(192, 194, 195);
     cursor: pointer;
     margin-left: 5px;
+    margin-top: 3px;
+    margin-bottom: 3px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
