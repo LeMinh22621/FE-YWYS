@@ -53,7 +53,7 @@ const TaskManager = props => {
     <div className={styles.task_manager_container}>
       <div className={styles.task_manager_container_wrapper}>
         {
-          taskLists?.map((taskList) => (<TaskList keyTaskList={taskList.key} section_title={taskList.title} tasks={taskList.tasks} handleDeleteTaskList={handleDeleteTaskList} />))
+          taskLists?.map((taskList) => (<TaskList key={taskList.key} keyTaskList={taskList.key} section_title={taskList.title} tasks={taskList.tasks} handleDeleteTaskList={handleDeleteTaskList} />))
         }
         <button
           className={styles.add_task_list_button}>

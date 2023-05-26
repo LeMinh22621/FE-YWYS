@@ -10,7 +10,11 @@ const TaskList = props => {
 
     const handleDeleteTask = (key) => {
         setCurrentTaskList(currentTaskList.filter( (task) => task.key !== key));
+        // console.log(currentTaskList);
     }
+    useEffect( () => {
+        // console.log(currentTaskList);
+    },[currentTaskList]);
     const handleDeleteTaskList = () =>{
         props.handleDeleteTaskList(props.keyTaskList);
     }
@@ -31,9 +35,9 @@ const TaskList = props => {
     return (
         <div key={props.keyTaskList} onMouseDown={onMouseDown} onMouseUp={onMouseUp} className={isActive ? `${styles.list_container} ${styles.is_grabbing}` : `${styles.list_container}`}>
             <div className={styles.list_container_wrapper}>
-               <TaskListHeader title={props.section_title} handleAddTask={handleAddTask} handleDeleteTaskList={handleDeleteTaskList}/>
+               <TaskListHeader key={props.keyTaskList} title={props.section_title} handleAddTask={handleAddTask} handleDeleteTaskList={handleDeleteTaskList}/>
                 {
-                    currentTaskList?.map((task) => (<Task keyTask={task.key} title={task.title} isDone={task.isDone} handleDeleteTask={handleDeleteTask}/> ))
+                    currentTaskList?.map((task) => (<Task key={task.key} keyTask={task.key} title={task.title} isDone={task.isDone} handleDeleteTask={handleDeleteTask}/> ))
                 }
             </div>
         </div>

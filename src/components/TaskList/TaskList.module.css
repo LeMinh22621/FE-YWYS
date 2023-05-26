@@ -1,7 +1,6 @@
 .list_container {
-    width: fit-content;
     height: fit-content;
-    min-width: 15vw;
+    width: 20vw;
     background-color: transparent;
 }
 .list_container_wrapper{
@@ -12,6 +11,8 @@
     padding: 10px;
     cursor: grab;
     background-color: #E3E3E3;
+    width: 20vw;
+    gap: 1rem;
 }
 
 .is_grabbing {

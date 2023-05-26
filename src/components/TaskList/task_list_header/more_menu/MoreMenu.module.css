@@ -4,8 +4,6 @@
     background-color: transparent;
     cursor: default;
     position: absolute;
-    margin-top: 15vh;
-    margin-left: 12vw;
 }
 .menu_more_container_wrapper{
     display: flex;
@@ -17,6 +15,7 @@
     background-color: aliceblue;
     border-radius: 5px;
     text-align: start;
+    font-size: medium;
 }
 .menu_more_item:hover{
     background-color: rgb(192, 194, 195);

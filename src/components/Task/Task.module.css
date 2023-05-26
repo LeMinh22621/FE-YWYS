@@ -2,19 +2,36 @@
     height: fit-content;
     width: 100%;
 }
-.card_container_wrapper{
-    height: 100%;
-    background-color: transparent;
+
+.card_container_wrapper {
+    height: fit-content;
+    width: 100%;
     border-radius: 5px;
     display: flex;
     flex-direction: row;
     outline: 1px solid rgb(172, 174, 173);
     flex-wrap: nowrap;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     padding-right: 3px;
 }
-.card_container_wrapper>textarea{
+
+.text_area_wrapper {
+    display: grid;
+    height: fit-content;
+    /* width: 100%; */
+}
+
+.text_area_wrapper::after {
+    /* Note the weird space! Needed to preventy jumpy behavior */
+    content: attr(data-replicated-value) " ";
+    /* This is how textarea text behaves */
+    white-space: pre-wrap;
+    /* Hidden from view, clicks, and screen readers */
+    visibility: hidden;
+}
+
+.text_area_wrapper>textarea {
     font-size: 18px;
     font-weight: lighter;
     font-style: italic;
@@ -25,15 +42,33 @@
     height: auto;
     min-height: 1em;
     resize: none;
+    overflow: hidden;
 }
+
+.text_area_wrapper>textarea,
+.text_area_wrapper::after {
+    font: inherit;
+    grid-area: 1 / 1 / 2 / 2;
+    word-wrap: break-word;
+    white-space: pre-line;
+    width: 13vw;
+}
+
 .card_container_wrapper:hover {
     background-color: #F0F0F0;
     cursor: pointer;
 }
-.icon{
+
+.icon {
     color: rgb(134, 132, 132);
     margin-right: 5px;
 }
-.icon:hover{
+
+.icon:hover {
     color: rgb(180, 179, 179);
+}
+
+.card_container_icon {
+    display: flex;
+    flex-direction: row;
 }
