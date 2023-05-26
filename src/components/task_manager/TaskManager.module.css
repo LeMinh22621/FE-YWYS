@@ -1,0 +1,64 @@
+.task_manager_container {
+    width: fit-content;
+    width: fit-content;
+    position: fixed;
+    top: 10rem;
+    left: 2rem;
+}
+
+.task_manager_container_wrapper {
+    max-width: 50vw;
+    min-width: 15vw;
+    max-height: 60vh;
+    min-height: 40vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+}
+
+.task_manager_container_wrapper::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: #f3f3f3;
+    cursor: pointer;
+}
+
+.task_manager_container_wrapper::-webkit-scrollbar-thumb {
+    background-color: #b4b4b4;
+    border-radius: 4px;
+}
+
+.task_manager_container_wrapper::-webkit-scrollbar-thumb:hover {
+    background-color: #858383;
+
+}
+
+.task_manager_container_wrapper::-webkit-scrollbar-track {
+    background-color: #f7f7f7;
+}
+
+.add_task_list_button {
+    width: fit-content;
+    outline: none;
+    background-color: transparent;
+    height: fit-content;
+    border: none;
+    box-sizing: border-box;
+
+}
+
+.add_icon {
+    color: #f9f9f9;
+    padding: 1px;
+    border-radius: 50%;
+    background-color: transparent;
+    font-size: 25px;
+}
+
+.add_icon:hover {
+    color: #b1b2b3;
+    cursor: pointer;
+}

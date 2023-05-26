@@ -4,6 +4,7 @@
     position: fixed;
     top: 10rem;
     left: 30rem;
+    /* display: block; */
 }
 .timer_container_wrapper{
     height: 100%;
@@ -20,4 +21,5 @@
     height: 80%;
     width: 100%;
     background-color: transparent;
+    outline: auto;
 }

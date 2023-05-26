@@ -1,0 +1,42 @@
+
+.list_header_container{
+    height: 100%;
+    width: 100%;
+}
+.list_header_container_wrapper{
+    height: 5vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    align-items: center;
+    font-size: 20px;
+}
+.list_header_container_wrapper>h3{
+    width: fit-content;
+    font-weight: bold;
+    text-align: start;
+    text-transform: uppercase;
+    color: #333;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.icon_container{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+.plus_icon{
+    color: #b6b3b3;
+}
+.plus_icon:hover{
+    color: #6b6a6a;
+    cursor: pointer;
+}
+.more_icon{
+    color: #b6b3b3;
+    float: left;
+}
+.more_icon:hover{
+    color: #6b6a6a;
+    cursor: pointer;
+}

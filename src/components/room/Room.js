@@ -9,6 +9,7 @@ import MotivationalQuoteDropdown from "../motivational_quote_dropdown/motivation
 import roomApi from "../../api/roomApi";
 import { useEffect } from "react";
 import Timer from "../timer/Timer";
+import TaskManager from "../task_manager/TaskManager";
 
 const fetchData = async (SetMotivationalQuoteData, token) => {
     try {
@@ -26,16 +27,20 @@ const fetchData = async (SetMotivationalQuoteData, token) => {
 }
 
 const Room = props => {
-
+    const [displayTimer, SetDisplayTimer] = useState("none");
     const [isImageIconOpen, SetIsImageIconOpen] = useState(false);
     const [isQuoteIconClicked, SetIsQuoteIconClicked] = useState(false);
     const [isHiddenQuote, SetIsHiddenQuote] = useState(true);
     const [isTimerClicked, SetIsTimerClicked] = useState(false);
+    const [isTaskClicked, SetIsTaskClicked] = useState(false);
     const [motivationalQuoteData, SetMotivationalQuoteData] = useState({});
 
     const shuffleQuote = () => {
-        const response = fetchData(SetMotivationalQuoteData, "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaG0yazFAZ21haWwuY29tIiwiaWF0IjoxNjgzNzkwMjIzLCJleHAiOjE2ODM4MTkwMjN9.mI7me9-GUp9HpDbgDjHP4RonDjvYm5WR2sG6j9zs6oM");
+        const response = fetchData(SetMotivationalQuoteData, localStorage.getItem("jwtToken"));
         console.log(response);
+    }
+    const toggleTaskClick = () => {
+        SetIsTaskClicked(!isTaskClicked)
     }
     const hiddenQuoteClick = () => {
         SetIsHiddenQuote(!isHiddenQuote);
@@ -43,6 +48,7 @@ const Room = props => {
     const toggleTimerClick = () => {
         SetIsQuoteIconClicked(false);
         SetIsTimerClicked(!isTimerClicked)
+        SetDisplayTimer(isTimerClicked && displayTimer === "none"? "block":"none");
     }
     const toggleQuoteClick = () => {
         SetIsQuoteIconClicked(!isQuoteIconClicked);
@@ -50,6 +56,10 @@ const Room = props => {
     const toggleImageMenu = () => {
         SetIsImageIconOpen(!isImageIconOpen);
     };
+    useEffect( () => {
+        SetDisplayTimer(isTimerClicked && displayTimer === "none"? "block":"none");
+        // eslint-disable-next-line
+    },[isTimerClicked]);
 
     useEffect(() => {
         shuffleQuote();
@@ -62,15 +72,19 @@ const Room = props => {
                         <ul>
                             <li>
                                 <FaIcon.FaImage onClick={toggleImageMenu} className={styles.header_icon} size={35} />
+                                <span className={styles.icon_description}>Space</span>
                             </li>
                             <li>
                                 <TFIIcon.TfiTimer onClick={toggleTimerClick} className={styles.header_icon} size={35} />
+                                <span className={styles.icon_description}>Timer</span>
                             </li>
                             <li>
-                                <FaIcon.FaTasks className={styles.header_icon} size={35} />
+                                <FaIcon.FaTasks onClick={toggleTaskClick} className={styles.header_icon} size={35} />
+                                <span className={styles.icon_description}>Task</span>
                             </li>
                             <li>
-                                <FaIcon.FaQuoteRight onClick={toggleQuoteClick} className={styles.header_icon} size={20} />
+                                <FaIcon.FaQuoteRight onClick={toggleQuoteClick} className={styles.header_icon} size={35} />
+                                <span className={styles.icon_description}>Quote</span>
                             </li>
                         </ul>
                         {
@@ -78,11 +92,10 @@ const Room = props => {
                                 <MotivationalQuoteDropdown shuffleQuote={shuffleQuote} hiddenQuoteClick={hiddenQuoteClick} />
                             )
                         }
-                        {
-                            isTimerClicked && (
-                                <Timer/>
-                            )
-                        }
+
+                        <Timer displayTimer = {displayTimer}/>
+
+
                     </div>
                 </div>
                 <>
@@ -96,6 +109,12 @@ const Room = props => {
                     {
                         isHiddenQuote && (
                             <MotivationalQuote motivationalQuoteData={motivationalQuoteData} />
+                        )
+                    }
+                    {
+                        isTaskClicked &&
+                        (
+                            <TaskManager />
                         )
                     }
                 </>

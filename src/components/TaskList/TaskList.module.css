@@ -1,44 +1,20 @@
-
-.list {
-    background-color: #E3E3E3;
+.list_container {
+    width: fit-content;
+    height: fit-content;
+    min-width: 15vw;
+    background-color: transparent;
+}
+.list_container_wrapper{
+    display: flex;
+    flex-direction: column;
     border-radius: 20px;
     margin: 5px 5px;
     padding: 10px;
-    width: 23vw;
-    height: fit-content;
     cursor: grab;
+    background-color: #E3E3E3;
 }
 
 .is_grabbing {
     opacity: 0.8;
     cursor: grabbing;
-}
-
-.list>header {
-    font-weight: bold;
-    font-size: 15px;
-    line-height: 18px;
-    cursor: auto;
-}
-.list .task_list_header{
-    display: flex; /* enable flexbox layout */
-    flex-direction: row; /* arrange elements in a row */
-    justify-content: space-between;
-    font-size: 20px;
-}
-.list .task_list_header .plus_icon{
-    color: #b6b3b3;
-}
-.list .task_list_header .plus_icon:hover{
-    color: #6b6a6a;
-    cursor: pointer;
-}
-.list .task_list_header>header{
-    width: fit-content;
-    height: 30px;
-    font-weight: bold;
-    text-align: start; /* adjust to your desired alignment */
-    text-transform: uppercase; /* optional - transforms text to uppercase */
-    color: #333; /* adjust to your desired color */
-    font-family: Georgia, 'Times New Roman', Times, serif;
 }

@@ -47,16 +47,6 @@ function Home() {
 
   return (
     <div className={styles.my_body_screen}>{/* have no */}
-      {/* <Navbar />
-      <div className={styles.main_container}>
-        <div className={styles.my_list}>
-          {
-            taskLists.map((taskList) => (<TaskList key={taskList.key} section_title={taskList.title} taskList={taskList.tasks}/>))
-          }
-          <FaIcons.FaPlus onClick={handleAddTaskList} className={styles.add_task_list}/>
-        </div>
-      </div> */}
-
       <Room/>
     </div>
   );

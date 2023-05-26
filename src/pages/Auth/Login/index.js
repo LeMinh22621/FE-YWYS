@@ -61,7 +61,7 @@ const Login = () => {
 
   return (
     <div id='login'>
-        <p ref={errRef} className={errMessage ? "errmsg" : "offscreen"} aria-live="assertive">{errMessage}</p>
+        <p ref={errRef} className={errMessage==='' ? "errmsg" : "offscreen"} aria-live="assertive">{errMessage}</p>
         <LoginForm setEmail={setEmail} setPassword={setPassword} loginClickFunc={handleLogin} />
     </div>
   );
@@ -111,12 +111,12 @@ const OtherMethods = props => (
   </div>
 );
 
-function Google() {
+const Google = () => {
   return (
     <div>
       <Link to={"login/google"}>
         {<IoIcons.IoLogoGoogle />}
-        <span>{"Google"}</span>
+        <span>Google</span>
       </Link>
     </div>
   );

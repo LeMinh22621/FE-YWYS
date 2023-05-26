@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import Task from '../Task/Task';
 import styles from './TaskList.module.css';
-import * as FaIcons from 'react-icons/fa';
+import TaskListHeader from './task_list_header/TaskListHeader';
 
 const TaskList = props => {
     const [isActive, setIsActive] = useState(false);
-    const [currentTaskList, setCurrentTaskList] = useState(null);
-    const [nextKey, setNextKey] = useState(props.taskList.length); // start with key length for new task lists
+    const [currentTaskList, setCurrentTaskList] = useState(props.tasks);
+    const [nextKey, setNextKey] = useState(props.tasks.length);
 
-    useEffect(() => setCurrentTaskList(props.taskList));
+    const handleDeleteTask = (key) => {
+        setCurrentTaskList(currentTaskList.filter( (task) => task.key !== key));
+    }
+    const handleDeleteTaskList = () =>{
+        props.handleDeleteTaskList(props.keyTaskList);
+    }
 
-    const onAddTask = props.addTask;
-
-    const handleAddTask = () => 
-    {
-        const newTask = {key: nextKey, title: "new title", percent: '0'};
-        // setCurrentTaskList((currentTaskList) => [...currentTaskList, newTask]);
-        onAddTask(currentTaskList, newTask);
-        setNextKey(nextKey + 1);
-        console.log(currentTaskList.length);
+    const handleAddTask = () => {
+        const newTask = { key: nextKey, title: "new title", isDone: false, handleDeleteTask:{handleDeleteTask} };
+        setCurrentTaskList((currentTaskList) => [...currentTaskList, newTask]);
+        setNextKey(nextKey => nextKey + 1);
     }
 
     const onMouseDown = () => {
@@ -29,15 +29,14 @@ const TaskList = props => {
     };
 
     return (
-        <section onMouseDown={onMouseDown} onMouseUp={onMouseUp} className={isActive ? `${styles.list} ${styles.is_grabbing}`: `${styles.list}` }>
-            <div className={styles.task_list_header}>
-                <header>{props.section_title}</header>
-                <FaIcons.FaPlusCircle className={styles.plus_icon} onClick={handleAddTask}/>
-            </div>
+        <div key={props.keyTaskList} onMouseDown={onMouseDown} onMouseUp={onMouseUp} className={isActive ? `${styles.list_container} ${styles.is_grabbing}` : `${styles.list_container}`}>
+            <div className={styles.list_container_wrapper}>
+               <TaskListHeader title={props.section_title} handleAddTask={handleAddTask} handleDeleteTaskList={handleDeleteTaskList}/>
                 {
-                    currentTaskList?.map((task) => (<Task key={task?.key} title={task?.title} percent={task?.percent} />))
+                    currentTaskList?.map((task) => (<Task keyTask={task.key} title={task.title} isDone={task.isDone} handleDeleteTask={handleDeleteTask}/> ))
                 }
-        </section>
+            </div>
+        </div>
     );
 }
 

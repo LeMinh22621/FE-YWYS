@@ -8,28 +8,3 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
   }
-
-  .scnd-font-color {
-    color: #9099b7;
-  }
-  .horizontal-list {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-  }
-
-  .my_list{
-    display: flex;
-    flex: auto;
-    float: left;
-  }
-
-  .my_list .add_task_list{
-    font-size: 25px;
-    margin-top: 5px;
-    color: #dddee2;
-  }
-  .my_list .add_task_list:hover{
-    color: #aaabad;
-    cursor: pointer;
-  }

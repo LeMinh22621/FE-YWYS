@@ -6,6 +6,8 @@ import TimerPersonal from "./timer_personal/TimerPersonal";
 import TimerSetting from "./timer_setting/TimerSetting";
 
 const Timer = props => {
+    const displayTimer = props.displayTimer;
+
     const [currentDropdownValue, SetCurrentDropdownValue] = useState('Personal');
     const [isSettingClick, SetIsSettingClick] = useState(false);
 
@@ -32,7 +34,7 @@ const Timer = props => {
     }
 
     return (
-        <div className={styles.timer_container}>
+        <div className={styles.timer_container} style={{display: `${displayTimer}`}}>
             <div className={isSettingClick?styles.timer_container_wrapper_clicked:styles.timer_container_wrapper}>
                 <TimerHeader handleSettingClick={handleSettingClick} handleDropdownSelection={handleDropdownSelection} />
 
