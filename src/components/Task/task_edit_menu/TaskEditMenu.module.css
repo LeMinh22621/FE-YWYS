@@ -4,8 +4,8 @@
     background-color: transparent;
     cursor: default;
     position: absolute;
-    margin-top: 10vh;
-    margin-left: 21vw;
+    margin-top: 4vh;
+    margin-left: 0vw;
 }
 .menu_container_wrapper{
     display: flex;

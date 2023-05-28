@@ -35,13 +35,15 @@ const Task = props => {
                     <textarea type='text' onInput={(event) => {event.target.parentNode.dataset.replicatedValue = event.target.value}} value={currentValue} onChange={handleChangeCurrentValue}/>
                 </div>
                 <div className={styles.card_container_icon}>
-                    <FaIcons.FaTrash className={styles.icon} size={20} onClick={handleDeleteTask}/>
-                    <FIIcons.FiEdit2 className={styles.icon} size={20} onClick={handleEditTask}/>
+                    <div className={styles.card_container_icon_wrapper}>
+                        <FaIcons.FaTrash className={styles.icon} size={20} onClick={handleDeleteTask}/>
+                        <FIIcons.FiEdit2 className={styles.icon} size={20} onClick={handleEditTask}/>
+                    </div>
+                    {
+                        isEditTaskClick && <TaskEditMenu/>
+                    }
                 </div>
                 
-                {
-                    isEditTaskClick && <TaskEditMenu/>
-                }
             </div>
         </div>
     );

@@ -1,0 +1,78 @@
+.label_container{
+    height: fit-content;
+    width: 100%;
+}
+.label_container_wrapper{
+    height: fit-content;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.input_container{
+    height: 100%;
+    width: 15%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+.input_container>input{
+    height: 18px;
+    width: 18px;
+}
+.title_color_container{
+    height: fit-content;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+.title_color_container_wrapper{
+    height: fit-content;
+    width: 100%;
+    outline: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 8px;
+}
+.title_color_container_wrapper>input {
+    height: auto;
+    width: 85%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+    color: #333;
+    font-size: 16px;
+    outline: none;
+}
+
+.color_container{
+    height: 3vh;
+    width: 3vh;
+    border-radius: 50%;
+    outline: 1px solid rgb(0, 0, 0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    margin-left: 1rem;
+}
+.color_container:hover{
+    margin-left: 1.1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+.delete_button{
+    height: auto;
+    width: 15%;
+    outline: none;
+    border: none;
+    background-color: transparent;
+}
+.delete_icon{
+    cursor: pointer;
+    color: rgb(134, 132, 132);
+}
+.delete_icon:hover{
+    color: rgb(180, 179, 179);
+}

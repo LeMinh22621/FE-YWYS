@@ -1,0 +1,12 @@
+.change_color_container{
+    height: 30vh;
+    width: auto;
+    position: absolute;
+    margin-top: 6vh;
+    margin-left: 0vw;
+}
+.change_color_container_wrapper{
+    height: 30vh;
+    width: auto;
+    overflow: auto;
+}

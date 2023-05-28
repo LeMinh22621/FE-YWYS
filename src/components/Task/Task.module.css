@@ -68,7 +68,11 @@
     color: rgb(180, 179, 179);
 }
 
-.card_container_icon {
+.card_container_icon{
+    display: flex;
+    flex-direction: column;
+}
+.card_container_icon_wrapper {
     display: flex;
     flex-direction: row;
 }
