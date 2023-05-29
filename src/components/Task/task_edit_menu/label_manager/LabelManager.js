@@ -3,6 +3,7 @@ import styles from './LabelManager.module.css';
 import { useState } from "react";
 import Label from "./label/Label";
 import * as AIIcons from "react-icons/ai";
+import * as RIIcons from "react-icons/ri";
 
 const LabelManager = props => {
     
@@ -15,9 +16,16 @@ const LabelManager = props => {
         {key: 5, isSelected: false, color: "blue", title: "Medium"},
         {key: 6, isSelected: false, color: "purple", title: "Large"}
     ]);
+    const [nextKey, setNextKey] = useState(labelList.length);
+
     const handleLabelClick = () => props.handleLabelClick();
     const handleDeleteLable = (key) => {
         setLabelList(labelList.filter( (label) => label.key !== key));
+    }
+    const handleAddLable = () => {
+        const newLabel = {key: nextKey, isSelected: true, color: "white", title: "new Label"}
+        setNextKey(nextKey + 1);
+        setLabelList([...labelList,newLabel]);
     }
     return (
         <div className={styles.label_manager_container}>
@@ -30,6 +38,9 @@ const LabelManager = props => {
                     {
                         labelList?.map( (label) => (<Label key={label.key} keyLabel={label.key} isSelected={label.isSelected} color={label.color} title={label.title} handleDeleteLable={handleDeleteLable}/>))
                     }
+                </div>
+                <div className={styles.add_label_container}>
+                    <button onClick={handleAddLable}>Add Labels ...</button>
                 </div>
             </div>
         </div>

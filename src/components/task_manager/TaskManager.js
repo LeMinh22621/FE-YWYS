@@ -7,7 +7,7 @@ import * as FaIcons from "react-icons/fa";
 const TaskManager = props => {
 
   const [todoList, setTodoList] = useState([
-    { key: 0, title: "to do task 1", isDone: true },
+    { key: 0, title: "to do task 1", isDone: true, label: []},
     { key: 1, title: "to do task 2", isDone: true },
     { key: 2, title: "to do task 3", isDone: false },
     { key: 3, title: "to do task 4", isDone: false },
