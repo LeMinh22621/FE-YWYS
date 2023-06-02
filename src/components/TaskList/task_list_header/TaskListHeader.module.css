@@ -1,7 +1,7 @@
-
 .list_header_container{
     height: 100%;
     width: 100%;
+    --list-title-color: var(--ds-text,#172b4d);
 }
 .list_header_container_wrapper{
     height: 5vh;
@@ -17,7 +17,7 @@
     font-weight: bold;
     text-align: start;
     text-transform: uppercase;
-    color: #333;
+    color: var(--list-title-color);
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 .icon_container{

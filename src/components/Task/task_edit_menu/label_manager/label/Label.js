@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from './Label.module.css';
 import { useState } from "react";
 import * as FaIcons from 'react-icons/fa';
@@ -13,6 +13,7 @@ const Label = props => {
 
     const handleChangeColor = (color) => {
         setCurrentColor(color);
+        other.handleEditALabel(keyLabel, color);
     }
     const handleChangeColorButtonClick = () => {
         setIsChangeColorClick(!isChangeColorClick);
@@ -26,6 +27,9 @@ const Label = props => {
     const handleDeleteLable = () => {
         other.handleDeleteLable(keyLabel);
     }
+    useEffect( () => {
+        currentSelected?other.handleAddCurrentLabelList({key:keyLabel, color:`${currentColor}`}):other.handleDeleteCurrentLabelList(keyLabel);
+    }, [currentSelected]);
     return (
         <div key={keyLabel} className={styles.label_container}>
             <div className={styles.label_container_wrapper}>
@@ -38,7 +42,7 @@ const Label = props => {
                         <input type="text" onChange={handleTitleChange} value={currentTitle}/>
                     </div>
                     {
-                        isChangeColorClick && <ChangeColorMenu handleChangeColor={handleChangeColor}/>
+                        isChangeColorClick && <ChangeColorMenu keyLabel={keyLabel} handleChangeColor={handleChangeColor} handleEditALabel={other.handleEditALabel}/>
                     }
                 </div>
                 <button className={styles.delete_button}> <FaIcons.FaTrash className={styles.delete_icon} size={20} onClick={handleDeleteLable}/> </button>

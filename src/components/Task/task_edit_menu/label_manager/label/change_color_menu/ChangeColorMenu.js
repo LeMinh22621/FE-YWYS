@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./ChangeColorMenu.module.css";
 
 const ChangeColorMenu = props => {
+    const {keyLabel, ...other} = props;
     const colorList = [
         { key: 1, color: "rgb(255, 0, 0)", colorName: "Red" },
         { key: 2, color: "rgb(0, 255, 0)", colorName: "Green" },
@@ -36,7 +37,7 @@ const ChangeColorMenu = props => {
     ];
     const handleChangeColor = (event) => {
         const backgroundColor = window.getComputedStyle(event.target).backgroundColor;
-        props.handleChangeColor(backgroundColor);
+        other.handleChangeColor(backgroundColor);
     }
     return (
         <div className={styles.change_color_container}>

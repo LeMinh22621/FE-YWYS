@@ -4,8 +4,7 @@
     background-color: transparent;
     cursor: default;
     position: absolute;
-    margin-top: 4vh;
-    margin-left: 0vw;
+    margin-left: 2vw;
 }
 .menu_container_wrapper{
     display: flex;
@@ -16,18 +15,16 @@
 .menu_item{
     display: flex;
     flex-direction: row;
-    background-color: aliceblue;
+    background-color: #0009;
     border-radius: 5px;
-    text-align: start;
-    flex-wrap: nowrap;
-    align-items: center;
-    gap: 0.5rem;
+    color: #c7d1db;;
+    margin: 0 0 4px 8px;
+    padding: 6px 12px 6px 8px;
+    cursor: pointer;
 }
 .menu_item:hover{
-    background-color: rgb(192, 194, 195);
-    cursor: pointer;
-    margin-left: 5px;
-    margin-top: 3px;
-    margin-bottom: 3px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background: #000c;
+    color: #fff;
+    text-decoration: none;
+    transform: translateX(5px);
 }

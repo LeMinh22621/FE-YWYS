@@ -1,16 +1,17 @@
 .list_container {
     height: fit-content;
     width: 20vw;
-    background-color: transparent;
+    --list-background-color: var(--tr-background-list,#ebecf0);
+    --list-text-color: var(--ds-text-subtle,#5e6c84);
+    margin: 5px 5px;
 }
 .list_container_wrapper{
     display: flex;
     flex-direction: column;
     border-radius: 20px;
-    margin: 5px 5px;
     padding: 10px;
     cursor: grab;
-    background-color: #E3E3E3;
+    background-color: var(--list-background-color);
     width: 20vw;
     gap: 1rem;
 }

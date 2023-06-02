@@ -1,0 +1,37 @@
+.date_time_manager_container{
+    height: fit-content;
+    width: 20vw;
+}
+.date_time_manager_container_wrapper{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-radius: 5px;
+    background-color: rgb(227, 227, 227);
+    padding: 10px;
+}
+.row{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.row>span{
+    color: #565353;
+    font-style: oblique;
+    font-weight: bold;
+}
+.row>input{
+    width: 50%;
+    height: fit-content;
+}
+.row>select{
+    width: 50%;
+    height: fit-content;
+}
