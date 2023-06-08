@@ -25,7 +25,6 @@ const TaskListHeader = props => {
                 <div className={styles.icon_container}>
                     <FaIcons.FaPlusCircle className={styles.plus_icon} size={25} onClick={handleAddTask} />
                     <FIIcons.FiMoreHorizontal className={styles.more_icon} size={25} onClick={onMoreIconClick} />
-                  
                 </div>
                 {
                     isMoreIconClick && <MoreMenu handleDeleteTaskList = {handleDeleteTaskList}/>

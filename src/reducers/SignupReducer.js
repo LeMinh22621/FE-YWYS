@@ -1,8 +1,9 @@
 import { SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE } from '../actions/SignupActions';
 
 const initialState = {
-  isSigningUp: false,
-  isSignUpSuccessful: false,
+  isRegistering: false,
+  isRegistered: false,
+  user: null,
   error: null,
 };
 
@@ -11,21 +12,25 @@ const SignupReducer = (state = initialState, action) => {
     case SIGNUP_REQUEST:
       return {
         ...state,
-        isSigningUp: true,
+        isRegistering: true,
+        isRegistered: false,
+        user: action.payload,
         error: null,
       };
     case SIGNUP_SUCCESS:
       return {
         ...state,
-        isSigningUp: false,
-        isSignUpSuccessful: true,
+        isRegistering: false,
+        isRegistered: true,
+        user: action.payload,
         error: null,
       };
     case SIGNUP_FAILURE:
       return {
         ...state,
-        isSigningUp: false,
-        isSignUpSuccessful: false,
+        isRegistering: false,
+        isRegistered: false,
+        user: null,
         error: action.payload,
       };
     default:

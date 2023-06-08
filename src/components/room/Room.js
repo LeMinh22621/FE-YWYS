@@ -10,6 +10,7 @@ import roomApi from "../../api/roomApi";
 import { useEffect } from "react";
 import Timer from "../timer/Timer";
 import TaskManager from "../task_manager/TaskManager";
+import { TOKEN_KEY } from "../../utils/auth";
 
 const fetchData = async (SetMotivationalQuoteData, token) => {
     try {
@@ -36,8 +37,7 @@ const Room = props => {
     const [motivationalQuoteData, SetMotivationalQuoteData] = useState({});
 
     const shuffleQuote = () => {
-        const response = fetchData(SetMotivationalQuoteData, localStorage.getItem("jwtToken"));
-        console.log(response);
+        fetchData(SetMotivationalQuoteData, localStorage.getItem(TOKEN_KEY));
     }
     const toggleTaskClick = () => {
         SetIsTaskClicked(!isTaskClicked)

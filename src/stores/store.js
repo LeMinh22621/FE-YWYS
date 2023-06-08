@@ -1,8 +1,7 @@
-import { applyMiddleware, createStore } from '@reduxjs/toolkit';
-import LoginReducer from '../reducers/SignupReducer';
-import SignupReducer from '../reducers/SignupReducer';
+import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import rootReducer from '../reducers/rootReducer';
 
-var store = createStore(LoginReducer);
-store = createStore(SignupReducer, applyMiddleware(thunk));
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
 export default store;

@@ -11,7 +11,7 @@
 .signup_container_wrapper {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 5%;
     gap: 1rem;
     background-color: #f7f4f4;
     border-radius: 25px;
@@ -47,7 +47,10 @@ input:focus {
     outline: none;
 }
 
-.email_wrapper {}
+.email_wrapper {
+    display: flex;
+    width: 100%;
+}
 
 .email_wrapper>input {
     width: 100%;

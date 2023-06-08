@@ -69,8 +69,7 @@ input:focus{
   box-shadow: inset 0px -2px 0px 0px rgba(32, 251, 255, 0.7);
   outline: none;
 }
-
-button{
+#button>button{
   border-radius: 25px;
   width: 80%;
   height: 40px;
@@ -83,7 +82,7 @@ button{
   transition: opacity 0.25s ease-out;
 }
 
-button:hover{
+#button>button:hover{
   opacity: 0.8;
 }
 

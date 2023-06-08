@@ -1,53 +1,124 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Home.module.css';
-// import TaskList from '../../components/TaskList/TaskList';
-// import * as FaIcons from 'react-icons/fa';
-// import Navbar from '../../components/navbar/Navbar';
+import { AiFillHome } from 'react-icons/ai';
+import RoomItem from '../../components/room_item/RoomItem';
+import { useDispatch, useSelector } from 'react-redux';
+import roomApi from "../../api/roomApi";
+import authApi from "../../api/authApi";
+import { TOKEN_KEY } from '../../utils/auth';
+import { useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../../actions/LoginActions';
+import * as FaIcons from 'react-icons/fa';
+import NewRoomForm from '../../components/new_room_form/NewRoomForm';
 
-import Room from '../../components/room/Room';
+const Home = props => {
+  const loggedIn = useSelector((state) => state.login);
+  const [user, setUser] = useState(loggedIn.user);
+  const [myRoomList, setMyRoomList] = useState([]);
+  const [isAvatarClick, setIsAvatarClick] = useState(false);
+  const [isAddRoomClick, setIsAddRoomClick] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  // fetch Data by token
+  useEffect( () => {
+    /**
+     * 
+     * Fetch User
+     */
+    const fetchUser = async (setUser) => {
+      try{
+        const token = localStorage.getItem(TOKEN_KEY);
+        const response = await authApi.checkExpiredToken(token);
+        setUser(response.data);
+        // eslint-disable-next-line
+      }
+      catch(err)
+      {
+        toast.error(err);
+      }
+    }
+    if(user == null)
+      fetchUser(setUser);
+    /**
+     * 
+     * Fetch My Room List
+     */
+    const fetchMyRoomList = async (setMyRoomList) =>{
+      try{
+        const userId = user.id;
+        const response = await roomApi.getMyRoomList(userId);
+        setMyRoomList(response.data);
+      }
+      catch(err)
+      {
+        toast.error(err);
+      }
+    }
+    fetchMyRoomList(setMyRoomList);
+  }, [user]);
 
-function Home() {
-  // const [todoList, setTodoList] = useState([
-  //   {key: 0, title: "to do task 0", percent: '1/2'},
-  //   {key: 1, title: "to do task 1", percent: '1/2'},
-  //   {key: 2, title: "to do task 2", percent: '1/3'},
-  //   {key: 3, title: "to do task 3", percent: '1/4'},
-  //   {key: 4, title: "to do task 1", percent: '1/2'},
-  //   {key: 5, title: "to do task 2", percent: '1/3'},
-  //   {key: 6, title: "to do task 3", percent: '1/4'}
-  // ]);
-  // const [doingList, setDoingList] = useState([
-  //   {key: 0, title: "doing task 0", percent: '1/2'},
-  //   {key: 1, title: "doing task 1", percent: '1/5'},
-  //   {key: 2, title: "doing task 2", percent: '1/6'},
-  //   {key: 3, title: "doing task 3", percent: '1/7'}
-  // ]);
-  // const [doneList, setDoneList] = useState([
-  //   {key: 0, title: "done task 0", percent: '1/2'},
-  //   {key: 1, title: "done task 1", percent: '1/2'},
-  //   {key: 2, title: "done task 2", percent: '1/3'},
-  //   {key: 3, title: "done task 3", percent: '1/4'}
-  // ]);
-
-  // const addTask = (currentList, newTask) => {currentList = [...currentList, newTask]}
-
-  // const [taskLists, setTaskLists] = useState([
-  //   { key: 0, title: 'To do', tasks: todoList, addTask: addTask},
-  //   { key: 1, title: 'Doing', tasks: doingList, addTask: addTask},
-  //   { key: 2, title: 'Done', tasks: doneList, addTask: addTask},
-  // ]);
-
-  // const [nextKey, setNextKey] = useState(taskLists.length); // start with key 3 for new task lists
-
-  // const handleAddTaskList = () => {
-  //   const newTaskList = { key: nextKey, title: 'New List', tasks: [], addTask: addTask};
-  //   setTaskLists([...taskLists, newTaskList]);
-  //   setNextKey(nextKey + 1); // increment key counter for next task list
-  // };
+  const handleLogout = async () =>{
+    try{
+      dispatch(logout());
+      navigate("/login", {replace:true});
+    }
+    catch (err) {
+      toast.error(err);
+    }
+  }
 
   return (
-    <div className={styles.my_body_screen}>{/* have no */}
-      <Room/>
+    <div className={styles.home_page_container}>
+      <div className={styles.home_page_container_wrapper}>
+        <div className={styles.header_container}>
+          <div className={styles.header_container_wrapper}>
+            <a className={styles.home_icon_container} href='/'>
+              <AiFillHome className={styles.home_icon}/>
+            </a>
+            <div className={styles.profile_infor}>
+              <span>{user?.first_name + " " + user?.last_name}</span>
+              <button onClick={() => setIsAvatarClick(!isAvatarClick)} className={styles.avatar_container}>
+                <div className={styles.avatar_container_wrapper} style={{backgroundImage: `url(${user?.url_avatar})`}}/>
+                {
+                  isAvatarClick && (
+                    <div className={styles.avatar_menu}>
+                      <span>Profile</span>
+                      <span onClick={handleLogout}>Logout</span>
+                    </div>
+                  )
+                }
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className={styles.body_container}>
+          <div className={styles.body_container_wrapper}>
+            <div className={styles.my_room_list_header}>
+              <h1>My Room</h1>
+              <div className={styles.add_my_room_list_icon}>
+                <FaIcons.FaPlusCircle onClick={() => setIsAddRoomClick(!isAddRoomClick)}/>
+              </div>
+              {
+                isAddRoomClick && <NewRoomForm closeNewRoomForm = {() => setIsAddRoomClick(!isAddRoomClick)}/>
+              }
+            </div>
+              <div className={styles.my_room_list_container}>
+                {
+                  myRoomList.map((roomItem) => <RoomItem key={roomItem?.room_id} avatar={user?.url_avatar} title={roomItem?.title} description={roomItem?.description} members={roomItem?.members} backgroundImage={roomItem.background.image_link}/>)
+                }
+              </div>
+              <h1>Public Room</h1>
+              <div className={styles.my_room_list_container}>
+                {
+                  myRoomList.map((roomItem) => <RoomItem key={roomItem?.room_id} avatar={user?.url_avatar} title={roomItem?.title} description={roomItem?.description} members={roomItem?.members} backgroundImage={roomItem.background.image_link}/>)
+                }
+              </div>
+          </div>
+        </div>
+      </div>
+      <ToastContainer/>
     </div>
   );
 }

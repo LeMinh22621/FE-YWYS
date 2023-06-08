@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from "react-redux";
 import { SignupRequest } from "../../../actions/SignupActions";
+import { useNavigate } from "react-router-dom";
 
 const Signup = props => {
     const [email, setEmail] = useState('');
@@ -15,16 +16,16 @@ const Signup = props => {
     const [data, setData] =  useState({
         email: email,
         password: password,
-        firstName: firstName,
-        lastName: lastName
+        first_name: firstName,
+        last_name: lastName
     })
-
+    const navigate = useNavigate();
     /**
      * redux
      */
     const dispatch = useDispatch();
-    const isSigningUp = useSelector((state) => state.isSigningUp);
-
+    const isSigningUp = useSelector((state) => state.signup.isRegistering);
+    const isRegistered = useSelector((state) => state.signup.isRegistered);
     const onSubmitClick = (event) =>{
         event.preventDefault();
         {
@@ -73,11 +74,15 @@ const Signup = props => {
         setData({
             email: email,
             password: password,
-            firstName: firstName,
-            lastName: lastName
+            first_name: firstName,
+            last_name: lastName
         });
     },[email, password, firstName, lastName]);
-
+    useEffect( () => {
+        if(isRegistered)
+            navigate("/login", {replace:true});
+            // eslint-disable-next-line
+    }, [isRegistered]) ;
     const [isShowPassword, setIsShowPassword] = useState(false);
     const handleShowPass = () => setIsShowPassword(!isShowPassword)
     return (

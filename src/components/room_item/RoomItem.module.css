@@ -1,0 +1,98 @@
+.room_item_container{
+    height: fit-content;
+    width: 30%;
+}
+.room_item_container_wrapper{
+    height: 25vh;
+    width: 100%;
+    background-color: #fff;
+    border-radius: calc(1vh + 1vw);
+    position: relative;
+}
+.background_image{
+    height: 50%;
+    width: 100%;
+    border-top-left-radius: calc(1vh + 1vw);
+    border-top-right-radius: calc(1vh + 1vw);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.avatar {
+    height: calc(2vh + 2vw);
+    width: calc(2vh + 2vw);
+    border-radius: 50%;
+    position: absolute;
+    top: 40%;
+    left: 3%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.body_item{
+    height: 50%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /*font*/
+    font-size: calc(1vh + 1vw);
+    font-weight: 600;
+    line-height: calc(1vh + 1vw);
+}
+
+.members_container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 1vw;
+    margin-top: 1vh;
+}
+.members_container .green_round{
+    height: 2vh;
+    width: 2vh;
+    border-radius: 50%;
+    background-color: greenyellow;
+}
+.members_container>span{
+    color: #333;
+    margin-bottom: 0;
+    margin-left: 1vw;
+    font-style: normal;
+    text-decoration: none;
+    font-size: calc(0.5vh + 0.5vw);;
+    line-height: calc(1vh + 1vw);;
+}
+.title{
+    height: fit-content;
+    width: 96%;
+    margin-left: 3%;
+}
+.title>span{
+    font-family: Circularstd book,sans-serif;
+    text-align: left;
+    color: #111825;
+    margin-bottom: 5px;
+    font-size: calc(0.5vh + 1vw);;
+    line-height: calc(1vh + 1vw);;
+    font-weight: 600;
+}
+.desctiption{
+    height: 40%;
+    width: 96%;
+    padding-left: 2%;
+}
+.desctiption>span{
+    height: 95%;
+    width: 100%;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: Circularstd book,sans-serif;
+    text-align: left;
+    color: #111825;
+    font-weight: 400;
+    font-size: calc(0.5vh + 0.5vw);;
+    line-height: calc(1vh + 0.8vw);;
+}

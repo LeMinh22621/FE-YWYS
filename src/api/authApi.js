@@ -7,6 +7,10 @@ const authApi = {
     register(data, config){
         return http.post('/auth/register', data, config);
     },
+    logout(config)
+    {
+        return http.post("/auth/logout", config);
+    },
     checkExpiredToken(token){
         return http.get(`/auth/verify-token?token=${token}`);
     }

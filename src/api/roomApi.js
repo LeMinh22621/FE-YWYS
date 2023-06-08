@@ -2,6 +2,15 @@ import http from "../utils/http";
 
 const roomApi = {
     /**
+     * Room
+     */
+    createRoom(data, config){
+        return http.post(`/room/create-room`, data, config)
+    },
+    getMyRoomList(userId, config){
+        return http.get(`/room/${userId}/my-rooms`, config);
+    },
+    /**
      * Task Manager
      */
     getTaskManagerById(taskManagerId, config)
@@ -38,6 +47,9 @@ const roomApi = {
     /**
      * Background
      */
+    getBackgroundById(backgroundId, config){
+        return http.get(`/room/background?background_id=${backgroundId}`, config)
+    },
     getBackgrondListByThemeId(themeId, config)
     {
         return http.get(`/room/backgrounds?theme_id=${themeId}`,config);
