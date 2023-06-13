@@ -11,7 +11,7 @@ const Task = props => {
 
     const [isEditTaskClick, setIsEditTask] = useState(false);
     const [isDueDateClick, setIsDueDateClick] = useState(false);
-    const [isLabelClick, setIsLabelClick] = useState(false);
+    // const [isLabelClick, setIsLabelClick] = useState(false);
 
     const [currentLabelList, setCurrentLabelList] = useState(labels);
     const [currentDueDate, setCurrentDueDate] = useState(dueDate);
@@ -64,7 +64,7 @@ const Task = props => {
     }
     useEffect( () => {
         console.log(currentDueDate);
-    }, [currentDueDate])
+    }, [currentDueDate]);
     return (
         <div key={keyTask} className={styles.card_container} draggable onDragStart={other.onDragStart}>
             <div className={styles.task_label_list}>
@@ -88,9 +88,9 @@ const Task = props => {
                 </div>
             </div>
             <div className={styles.due_date} onClick={handleClickDueDate}>
-                <span>{currentDueDate.startDate!== undefined?currentDueDate.startDate:null}</span>
-                <span>{currentDueDate.startTime !== undefined?convertSecondstToTime(currentDueDate.startTime):null}</span>
-                <span>{currentDueDate.timeIntend !== undefined?`[${convertSecondstToTime(currentDueDate.timeIntend)}]`:null}</span>
+                <span>{currentDueDate?.startDate!== undefined?currentDueDate?.startDate:null}</span>
+                <span>{currentDueDate?.startTime !== undefined?convertSecondstToTime(currentDueDate?.startTime):null}</span>
+                <span>{currentDueDate?.timeIntend !== undefined?`[${convertSecondstToTime(currentDueDate?.timeIntend)}]`:null}</span>
             </div>
         </div>
     );

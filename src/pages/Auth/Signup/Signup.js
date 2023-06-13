@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Signup.module.css";
 import * as AIIcons from "react-icons/ai";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from "react-redux";
 import { SignupRequest } from "../../../actions/SignupActions";
@@ -121,7 +121,6 @@ const Signup = props => {
                     <a href='/login'>Login</a>
                 </div>
             </div>
-            <ToastContainer />
         </div>
     );
 }

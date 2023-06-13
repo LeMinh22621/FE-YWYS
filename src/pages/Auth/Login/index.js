@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from "./index.module.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { loginRequest } from '../../../actions/LoginActions';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 const Login = props => {
@@ -49,7 +49,6 @@ const Login = props => {
       <div id={styles.signup}>
         <a href='/signup'>Sign up</a>
       </div>
-      <ToastContainer/>
     </div>
   );
 }

@@ -1,12 +1,11 @@
 .motivational_quote_dropdown_container {
     height: fit-content;
     width: fit-content;
-    z-index: 100;
+    position: absolute;
+    top: 50%;
 }
 
 .motivational_quote_dropdown_container_wrapper {
-    height: 100%;
-    width: 100%;
     background-color: white;
     padding: 10px;
     border-radius: 10px;

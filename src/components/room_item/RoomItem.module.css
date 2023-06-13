@@ -1,6 +1,7 @@
 .room_item_container{
     height: fit-content;
     width: 30%;
+    cursor: pointer;
 }
 .room_item_container_wrapper{
     height: 25vh;
@@ -8,6 +9,9 @@
     background-color: #fff;
     border-radius: calc(1vh + 1vw);
     position: relative;
+}
+.room_item_container_wrapper:hover{
+    box-shadow: 0 1vh 1vw rgba(0, 0, 0, 0.2);
 }
 .background_image{
     height: 50%;

@@ -4,6 +4,13 @@ const roomApi = {
     /**
      * Room
      */
+    updateRoom(roomId, data, config){
+        return http.patch(`/room/update-room-apart/${roomId}`, data, config);
+    },
+    getDetailRoom(roomId, config)
+    {
+        return http.get(`/room?room_id=${roomId}`, config);
+    },
     createRoom(data, config){
         return http.post(`/room/create-room`, data, config)
     },

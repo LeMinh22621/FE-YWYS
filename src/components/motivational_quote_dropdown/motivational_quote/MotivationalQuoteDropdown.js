@@ -4,15 +4,15 @@ import * as AIIcons from "react-icons/ai";
 import * as CGIcons from "react-icons/cg";
 
 const MotivationalQuoteDropdown = props => {
-
+    const {...others} = props;
     const [isHidden, SetIsHidden] = useState(true);
 
     const hiddenOnClick = () => {
         SetIsHidden(!isHidden);
-        props.hiddenQuoteClick(!isHidden);
+        others.hiddenQuoteClick(!isHidden);
     }
     const shuffleQuoteOnClick = () => {
-        props.shuffleQuote();
+        others.shuffleQuote();
     }
 
     return (

@@ -6,8 +6,9 @@ class Http{
     {
         this.instance = axios.create(
             {
-                // baseURL: 'http://localhost:8089/api/v1',
-                baseURL:'http://192.168.1.19:8089/api/v1',
+                baseURL: 'http://localhost:8089/api/v1',
+                // baseURL:'http://192.168.1.19:8089/api/v1',
+                // baseURL:'http://192.168.1.151:8089/api/v1',
                 // baseURL: 'https://8355-113-23-114-34.ngrok-free.app/api/v1',
                 headers: {
                     'Content-Type': 'application/json',
@@ -62,7 +63,7 @@ class Http{
 
     patch(url, data, config = null)
     {
-        this.instance.patch(url, data, config)
+        return this.instance.patch(url, data, config)
     }
 
     delete(url, data, config = null)

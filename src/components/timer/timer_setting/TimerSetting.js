@@ -4,13 +4,14 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const TimerSetting = props => {
-    const [focusTime, SetFocusTime] = useState(props.timeLine.focus);
-    const [shortBreakTime, SetShortBreakTime] = useState(props.timeLine.shortBreak);
-    const [longBreakTime, SetLongBreakTime] = useState(props.timeLine.longBreak);
-    const [loopTimes, SetLoopTimes] = useState(props.timeLine.loopTimes);
-
-    
-    const handleFocusTimeChange = (event, setFunc) => {
+    const {timeLine, ...others} = props;
+    const [currentTimeLine, setCurrentTimeLine] = useState(timeLine);
+    const [focusTime, SetFocusTime] = useState(currentTimeLine.pomodoro_time);
+    const [shortBreakTime, SetShortBreakTime] = useState(currentTimeLine.short_break);
+    const [longBreakTime, SetLongBreakTime] = useState(currentTimeLine.long_break);
+    const [loopTimes, SetLoopTimes] = useState(currentTimeLine.loop_times);
+    console.log(currentTimeLine);
+    const handleChange = (event, setFunc) => {
         let value = parseInt(event.target.value);
         if(value <= 0)
             value = 0;
@@ -18,18 +19,15 @@ const TimerSetting = props => {
     }
 
     useEffect(() => {
-        const handleTimeLine = (newTimeLine) => {
-            props.setTimeLine(newTimeLine);
-        }
-        handleTimeLine(
-            {
-                "focus": focusTime,
-                "shortBreak": shortBreakTime,
-                "longBreak": longBreakTime,
-                "loopTimes": loopTimes
-            }
-        )
-    }, [focusTime,shortBreakTime,longBreakTime,loopTimes, props])
+        others.setTimeLine(
+        {
+            "pomodoro_time": focusTime,
+            "short_break": shortBreakTime,
+            "long_break": longBreakTime,
+            "loop_times": loopTimes
+        });
+        // eslint-disable-next-line
+    }, [focusTime,shortBreakTime,longBreakTime,loopTimes])
 
     return (
         <div className={styles.setting_container}>
@@ -37,20 +35,20 @@ const TimerSetting = props => {
                 <div className={styles.setting_time_line_container}>
                     <div className={styles.an_edit}>
                         <h3>Pomodoro</h3>
-                        <input value={focusTime} onChange={(event) => handleFocusTimeChange(event, SetFocusTime)} type="number" ></input>
+                        <input value={focusTime} onChange={(event) => handleChange(event, SetFocusTime)} type="number" ></input>
                     </div>
                     <div className={styles.an_edit}>
                         <h3>Short Break</h3>
-                        <input value={shortBreakTime} onChange={(event) => handleFocusTimeChange(event, SetShortBreakTime)} type="number"></input>
+                        <input value={shortBreakTime} onChange={(event) => handleChange(event, SetShortBreakTime)} type="number"></input>
                     </div>
                     <div className={styles.an_edit}>
                         <h3>Long Break</h3>
-                        <input value={longBreakTime} onChange={(event) => handleFocusTimeChange(event, SetLongBreakTime)} type="number"></input>
+                        <input value={longBreakTime} onChange={(event) => handleChange(event, SetLongBreakTime)} type="number"></input>
                     </div>
-                </div>
-                <div className={styles.an_edit}>
-                    <h3>Pomodoro Loop Times</h3>
-                    <input onChange={(event) => handleFocusTimeChange(event, SetLoopTimes)} value={loopTimes} type="number"></input>
+                    <div className={styles.an_edit}>
+                        <h3>Pomodoro Loop Times</h3>
+                        <input onChange={(event) => handleChange(event, SetLoopTimes)} value={loopTimes} type="number"></input>
+                    </div>
                 </div>
             </div>
         </div>

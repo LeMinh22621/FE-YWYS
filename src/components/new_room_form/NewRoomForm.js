@@ -19,16 +19,16 @@ const NewRoomForm = props => {
         is_public: isPublic
     });
     const handleCreateRoom = async () => {
+        console.log(data.description === '');
         if(data.description === '' || data.title === '')
         {
             toast.error("please full fill out!");
-            navigate("/login", {replace: true});
             return;
         }
         try{
             const response = await roomApi.createRoom(data);
-            
             console.log(response.data);
+            navigate(`/room/${response.data.room_id}`, )
         }
         catch(err)
         {

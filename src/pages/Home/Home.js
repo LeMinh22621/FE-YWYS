@@ -106,13 +106,13 @@ const Home = props => {
             </div>
               <div className={styles.my_room_list_container}>
                 {
-                  myRoomList.map((roomItem) => <RoomItem key={roomItem?.room_id} avatar={user?.url_avatar} title={roomItem?.title} description={roomItem?.description} members={roomItem?.members} backgroundImage={roomItem.background.image_link}/>)
+                  myRoomList?.map((roomItem) => <RoomItem key={roomItem?.room_id} roomId={roomItem?.room_id} avatar={user?.url_avatar} title={roomItem?.title} description={roomItem?.description} members={roomItem?.members} backgroundImage={roomItem.background.image_link}/>)
                 }
               </div>
               <h1>Public Room</h1>
               <div className={styles.my_room_list_container}>
                 {
-                  myRoomList.map((roomItem) => <RoomItem key={roomItem?.room_id} avatar={user?.url_avatar} title={roomItem?.title} description={roomItem?.description} members={roomItem?.members} backgroundImage={roomItem.background.image_link}/>)
+                  myRoomList?.map((roomItem) => <RoomItem key={roomItem?.room_id}  roomId={roomItem?.room_id} avatar={user?.url_avatar} title={roomItem?.title} description={roomItem?.description} members={roomItem?.members} backgroundImage={roomItem.background.image_link}/>)
                 }
               </div>
           </div>

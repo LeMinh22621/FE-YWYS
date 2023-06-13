@@ -13,7 +13,7 @@ export const loginRequest = (email, password) => {
     try {
           const response = await authApi.login({email, password});
           console.log(response);
-          if(response.status)
+          if(response.status && response.return_code === 200)
           {
             const token = response.data.token;
             const user = response.data.user;
@@ -27,13 +27,31 @@ export const loginRequest = (email, password) => {
             dispatch({ type: LOGIN_FAILURE, payload: response.message });
             toast.error(response.message);
           }
-          
-          // Có thể thực hiện các hành động khác sau khi đăng ký thành công, như chuyển hướng trang.
       }
       catch (error) {
-          dispatch({ type: LOGIN_FAILURE, payload: error });
-          // Có thể xử lý các lỗi hoặc hiển thị thông báo lỗi cho người dùng.
-          toast.error(LOGIN_FAILURE);
+        if(error.return_code === 401)
+        {
+          removeToken();
+          const newResponse = await authApi.login({email, password});
+          console.log(newResponse);
+          if(newResponse.status && newResponse.return_code === 200)
+          {
+            const token = newResponse.data.token;
+            const user = newResponse.data.user;
+
+            setToken(token);
+            dispatch({ type: LOGIN_SUCCESS, payload: user});
+            toast.success(newResponse.message);
+          }
+          else{
+            dispatch({ type: LOGIN_FAILURE, payload: error.message });
+            toast.error(newResponse.message);
+          }
+        }
+        else{
+          dispatch({ type: LOGIN_FAILURE, payload: error.message });
+          toast.error(error.message);
+        }
       }
   };
 };
@@ -52,7 +70,6 @@ export const logout = () => {
   return async (dispatch) => {
     dispatch({type: LOGOUT});
     const response = await authApi.logout();
-    console.log(response);
     if(response.status)
     {
       removeToken();
@@ -63,5 +80,3 @@ export const logout = () => {
     }
   };
 };
-  
-  

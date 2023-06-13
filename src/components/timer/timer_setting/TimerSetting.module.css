@@ -1,38 +1,45 @@
 .setting_container {
-    width: 100%;
+    width: 20vw;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background: #fcfcfc;
+    border-radius: 10px;
 }
 
 .setting_container_wrapper {
-    padding-top: 20px;
     display: flex;
     flex-direction: column;
+    padding: calc(1vw + 1vh);
 }
 .setting_time_line_container
 {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    width: 100%;
 }
 
 .an_edit {
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
     background-color: transparent;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
 }
 
 .an_edit h3 {
-    margin-top: 0px;
-    font-size: 18px;
-    text-align: center;
+    font-size: calc(0.8vw + 0.8vh);
+    text-align: start;
+    width: 75%;
 }
 
 .an_edit input {
-    width: 100%;
+    width: 25%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+    box-shadow: none;
 }
 
 .an_edit input:focus {

@@ -1,14 +1,11 @@
 .room_container {
     height: 100vh;
     width: 100vw;
-    background-color: rgb(182, 213, 241);
     position: relative;
 }
 
 .room_container_wrapper {
     padding: 0.2%;
-    height: 100%;
-    width: 100%;
     position: relative;
 }
 
@@ -18,34 +15,47 @@
 }
 
 .header_container_wrapper {
-    height: 100%;
-    width: 100%;
-    float: right;
+    justify-content: space-between;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+.list_item_container{
     justify-content: space-between;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    flex-wrap: nowrap;
 }
-
-.header_container_wrapper>ul {
+.list_item_container>ul {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     list-style: none;
 }
 
-.header_container_wrapper>li {
+.list_item_container>li {
     margin: 0;
     height: 100%;
     width: 100%;
 }
-
-.header_container_wrapper button {
+.list_item_container button {
     border: none;
     background-color: transparent;
     font-size: 16px;
     cursor: pointer;
+}
+.back_arrow_icon{
+    font-size: calc(3vh + 3vh);
+    color: aliceblue;
+    cursor: pointer;
+}
+.back_arrow_icon:hover{
+    color: rgb(186, 187, 188);
+    margin-left: 0.5vw;
 }
 
 .header_icon {
