@@ -5,9 +5,21 @@ import * as VSCIcons from 'react-icons/vsc';
 
 const TimerPersonal = props => {
     const labels = ['Focus', 'Break', 'Long Break'];
-    const {timeLine, ...others} = props;
+    // eslint-disable-next-line
+    let {currentDropdownValue, timeLine, ...others} = props;
+    timeLine = currentDropdownValue === "Personal"?{
+        pomodoro_time: timeLine.pomodoro_time,
+        short_break: timeLine.short_break,
+        long_break:  timeLine.long_break,
+        loop_times: timeLine.loop_times 
+    }:{
+        pomodoro_time: timeLine.gr_pomodoro_time,
+        short_break: timeLine.gr_short_break,
+        long_break:  timeLine.gr_long_break,
+        loop_times: timeLine.gr_loop_times 
+    };
     const [currentLabel, SetCurrentLabel] = useState(labels[0]);
-    const [counterTimer, SetCounterTimer] = useState(timeLine.pomodoro_time);
+    const [counterTimer, SetCounterTimer] = useState(timeLine?.pomodoro_time);
     const [currentLoop, SetCurrentLoop] = useState(1);
 
     const [isRunning, SetIsRunning] = useState(false);
@@ -22,7 +34,7 @@ const TimerPersonal = props => {
         SetIsRunning(!isRunning);
     }
     const handleRestart = () => {
-        SetCounterTimer(timeLine.pomodoro_time);
+        SetCounterTimer(timeLine?.pomodoro_time);
         SetCurrentLoop(1);
         SetCurrentLabel(labels[0]);
     }
@@ -35,16 +47,16 @@ const TimerPersonal = props => {
     }, [counterTimer])
     useEffect( () => {
         if(currentLabel === 'Focus')
-            SetCounterTimer(timeLine.pomodoro_time);
-    }, [currentLabel, timeLine.pomodoro_time]);
+            SetCounterTimer(timeLine?.pomodoro_time);
+    }, [currentLabel, timeLine?.pomodoro_time]);
     useEffect( () => {
         if(currentLabel === 'Short Break')
-            SetCounterTimer(timeLine.short_break);
-    }, [currentLabel, timeLine.short_break]);
+            SetCounterTimer(timeLine?.short_break);
+    }, [currentLabel, timeLine?.short_break]);
     useEffect( () => {
         if(currentLabel === 'Long Break')
-            SetCounterTimer(timeLine.long_break);
-    }, [currentLabel, timeLine.long_break]);
+            SetCounterTimer(timeLine?.long_break);
+    }, [currentLabel, timeLine?.long_break]);
 
     useEffect(() => {
         let interval = null;
@@ -52,24 +64,24 @@ const TimerPersonal = props => {
             if (counterTimer === 0) {
                 if (currentLabel === 'Focus') {
                     SetCurrentLabel('Short Break');
-                    SetCounterTimer(timeLine.short_break);
+                    SetCounterTimer(timeLine?.short_break);
                 }
                 else if (currentLabel === 'Short Break') {
-                    if (currentLoop < timeLine.loop_times) {
+                    if (currentLoop < timeLine?.loop_times) {
                         SetCurrentLoop(currentLoop => currentLoop + 1);
                         SetCurrentLabel('Focus')
-                        SetCounterTimer(timeLine.pomodoro_time);
+                        SetCounterTimer(timeLine?.pomodoro_time);
                     }
                     else {
                         SetCurrentLabel('Long Break')
-                        SetCounterTimer(timeLine.long_break);
+                        SetCounterTimer(timeLine?.long_break);
                     }
                 }
                 else if (currentLabel === 'Long Break') {
                     SetCurrentLoop(1);
                     SetIsRunning(false);
                     SetCurrentLabel('Focus')
-                    SetCounterTimer(timeLine.pomodoro_time);
+                    SetCounterTimer(timeLine?.pomodoro_time);
                 }
             }
             interval = setInterval(() => {
@@ -102,7 +114,7 @@ const TimerPersonal = props => {
                 </div>
                 
                 <div className={styles.row_two_container}>
-                    <h2>{currentLoop}/{timeLine.loop_times}</h2>
+                    <h2>{currentLoop}/{timeLine?.loop_times}</h2>
                 </div>
             </div>
         </div>

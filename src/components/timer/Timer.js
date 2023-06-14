@@ -8,18 +8,8 @@ import TimerSetting from "./timer_setting/TimerSetting";
 const Timer = props => {
     const {displayTimer, timerData, zIndex, ...others} = props;
     const [curZIndex, setCurZIndex] = useState(zIndex.timer);
-
     const [currentDropdownValue, SetCurrentDropdownValue] = useState('Personal');
     const [isSettingClick, SetIsSettingClick] = useState(false);
-    const [currentTimerData, setCurrentTimerData] = useState(timerData);
-    
-    useEffect( () => {
-        setCurrentTimerData(timerData);
-    },[timerData]);
-    useEffect( () => {
-        others.setTimerData(currentTimerData);
-        // eslint-disable-next-line
-    },[currentTimerData])
 
     const handleDropdownSelection = (str) => {
         SetCurrentDropdownValue(str);
@@ -89,9 +79,9 @@ const Timer = props => {
                         {
                             currentDropdownValue === "Personal" ?
 
-                                <TimerPersonal timeLine={currentTimerData} />
+                                <TimerPersonal currentDropdownValue={currentDropdownValue} timeLine={timerData} />
                                 :
-                                <TimerPersonal timeLine={currentTimerData} />
+                                <TimerPersonal currentDropdownValue={currentDropdownValue} timeLine={timerData} />
                         }
                     </div>
                 </div>
@@ -99,9 +89,9 @@ const Timer = props => {
                     isSettingClick &&
                     (
                         currentDropdownValue === "Personal" ?
-                            <TimerSetting timeLine={currentTimerData} setTimeLine={setCurrentTimerData}/>
+                            <TimerSetting currentDropdownValue={currentDropdownValue} timeLine={timerData} setTimeLine={others.setTimerData}/>
                             :
-                            <TimerSetting timeLine={currentTimerData} setTimeLine={setCurrentTimerData}/>
+                            <TimerSetting currentDropdownValue={currentDropdownValue} timeLine={timerData} setTimeLine={others.setTimerData}/>
                     )
                 }
             </div>
