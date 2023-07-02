@@ -5,10 +5,11 @@ import { useEffect } from "react";
 
 const MotivationalQuote = props => {
     const {displayQuote, zIndex, ...others} = props;
-    const [curZIndex, setCurZIndex] = useState(zIndex.quote);
+    
     /**
      * Drag drop motivational quote
      */
+    const [curZIndex, setCurZIndex] = useState(zIndex.quote);
     const [position, setPosition] = useState({ left: 50, top: 50 });
     const [dragging, setDragging] = useState(false);
     const [startPos, setStartPos] = useState({ x: 0, y: 0 });

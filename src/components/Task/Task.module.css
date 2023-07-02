@@ -2,14 +2,29 @@
     --ds-surface-raised: #FFFFFF;
     --ds-shadow-raised: 0px 1px 1px #091E4240, 0px 0px 1px #091E424F;
     height: fit-content;
-    border-radius: 5px;
+    border-radius: calc(0.3vw + 0.3vh);
     box-shadow: var(--ds-shadow-raised,0 1px 0 #091e4240);
-    padding: 8px 8px 4px 12px;
+    padding: calc(0.3vw + 0.3vh);
     background-color: var(--ds-surface-raised);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
 }
 .card_container:hover{
     background-color: #F0F0F0;
     cursor: pointer;
+}
+.card_container>button{
+    padding: calc(0.4vw + 0.4vh);
+    background-color: rgb(16, 16, 246);
+    cursor: pointer;
+    border-radius: calc(0.6vw + 0.6vh);
+    font-size: calc(0.8vh + 0.8vw);
+    border: none;
+}
+.card_container>button:hover{
+    background-color: rgb(96, 96, 247);
+    margin-left: calc(0.2vw + 0.2vh);
 }
 .task_label_list{
     display: flex;
@@ -89,11 +104,21 @@
     color: transparent;
     cursor: pointer;
 }
+.icon_delete{
+    color: transparent;
+    cursor: pointer;
+}
 .card_container:hover .icon{
+    color: #a19f9f;
+}
+.card_container:hover .icon_delete{
     color: #a19f9f;
 }
 .card_container:hover .icon:hover {
     color: #8b8b8b
+}
+.card_container:hover .icon_delete:hover {
+    color: #ff0000;
 }
 
 .card_container_icon{
@@ -114,9 +139,6 @@
     flex-wrap: nowrap;
     align-items: center;
     justify-content: space-around;
-}
-.due_date:hover{
-    background-color: white;
 }
 .due_date>span{
     font-size: 12px;

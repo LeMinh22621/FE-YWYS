@@ -17,9 +17,21 @@ const roomApi = {
     getMyRoomList(userId, config){
         return http.get(`/room/${userId}/my-rooms`, config);
     },
+    deleteRoomByRoomId(roomId, config)
+    {
+        return http.delete(`/room/delete/${roomId}`, config);
+    },
+    getPublichRoomOrderByMembers(config)
+    {
+        return http.get(`/room/public-rooms`, config);
+    },
     /**
      * Task Manager
      */
+    getListTaskManagerByRoomId(roomId, config)
+    {
+        return http.get(`/room/task-manager-list?room_id=${roomId}`, config);
+    },
     getTaskManagerById(taskManagerId, config)
     {
         return http.get(`/room/task-manager?task_manager_id=${taskManagerId}`, config);
@@ -37,6 +49,10 @@ const roomApi = {
     /**
      * Task
      */
+    // getTaskListByTaskManagerId(taskManagerId, config)
+    // {
+    //     return http.get(`/room/task-list?task_manager_id`)
+    // },
     getTaskByID(taskId, config)
     {
         return http.get(`/room/task?task_id=${taskId}`, config);
@@ -67,6 +83,20 @@ const roomApi = {
     getRandomMotivationQuote(config)
     {
         return http.get('/room/shuffle-motivational-quote', config);
+    },
+    /**
+     * Label
+     */
+    getLabelListByRoomId(roomId, config)
+    {
+        return http.get(`/room/labels?room_id=${roomId}`);
+    },
+    /**
+     * Theme
+     */
+    getAllThemes(config)
+    {
+        return http.get(`/room/themes`, config);
     }
 }
 export default roomApi;

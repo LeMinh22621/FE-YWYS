@@ -1,6 +1,6 @@
 .room_item_container{
     height: fit-content;
-    width: 30%;
+    width: 23%;
     cursor: pointer;
 }
 .room_item_container_wrapper{
@@ -12,6 +12,19 @@
 }
 .room_item_container_wrapper:hover{
     box-shadow: 0 1vh 1vw rgba(0, 0, 0, 0.2);
+}
+.delete_icon{
+    float: right;
+    padding: 3% 3% 0 0;
+    color: #e9e3e3;
+    font-size: calc(1vw + 1vh);
+    cursor: pointer;
+    position: relative;
+    z-index: 999;
+}
+.delete_icon:hover{
+    padding: 4% 4% 0 0;
+    color: #ff0000;
 }
 .background_image{
     height: 50%;

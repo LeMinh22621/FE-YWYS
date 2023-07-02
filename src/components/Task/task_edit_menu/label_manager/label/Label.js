@@ -19,7 +19,10 @@ const Label = props => {
         setIsChangeColorClick(!isChangeColorClick);
     }
     const handleSelect = () =>{
-        setCurrentSelected(!currentSelected);
+        if(currentSelected === undefined)
+            setCurrentSelected(true);
+        else
+            setCurrentSelected(!currentSelected);
     }
     const handleTitleChange = (event) =>{
         setCurrentTitle(event.target.value);
@@ -29,12 +32,13 @@ const Label = props => {
     }
     useEffect( () => {
         currentSelected?other.handleAddCurrentLabelList({key:keyLabel, color:`${currentColor}`}):other.handleDeleteCurrentLabelList(keyLabel);
+        // eslint-disable-next-line
     }, [currentSelected]);
     return (
         <div key={keyLabel} className={styles.label_container}>
             <div className={styles.label_container_wrapper}>
                 <div className={styles.input_container}>
-                    <input type='checkbox' checked={currentSelected} onChange={handleSelect}/>
+                    <input type='checkbox' checked={currentSelected} onChange={handleSelect} value={currentSelected}/>
                 </div>
                 <div className={styles.title_color_container} >
                     <div className={styles.title_color_container_wrapper} style={{backgroundColor: `${currentColor}`}}>

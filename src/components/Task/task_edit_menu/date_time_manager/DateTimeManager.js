@@ -43,6 +43,7 @@ const DateTimeManager = props => {
     }
     useEffect( () => {
         other.handleEditDueDate({startDate: startDate, startTime: startTime, timeIntend: timeIntend});
+        // eslint-disable-next-line
     }, [startDate, startTime, timeIntend])
     return (
         <div className={styles.date_time_manager_container}>

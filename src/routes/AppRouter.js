@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from '../hooks/useAuth';
 import { RequireAuth } from '../requirements/RequireAuth';
 import Room from '../components/room/Room';
+import Admin from '../pages/Admin/Admin';
 
 export default function AppRouter(){
     return (
@@ -16,6 +17,7 @@ export default function AppRouter(){
             <Route path='/signup' element={<Signup/>} />
             <Route path="/home" element={ <RequireAuth> <Home/> </RequireAuth>}/>
             <Route path={`/room/:room_id`} element={  <RequireAuth> <Room /> </RequireAuth> }/>
+            <Route path='/admin' element={  <RequireAuth> <Admin /> </RequireAuth> }/>
             <Route path="/" element={  <RequireAuth> <Home/> </RequireAuth> }/>
           </Routes>
         </Router>

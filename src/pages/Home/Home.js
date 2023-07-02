@@ -17,6 +17,7 @@ const Home = props => {
   const loggedIn = useSelector((state) => state.login);
   const [user, setUser] = useState(loggedIn.user);
   const [myRoomList, setMyRoomList] = useState([]);
+  const [publicRooms, setPublicRooms] = useState([]);
   const [isAvatarClick, setIsAvatarClick] = useState(false);
   const [isAddRoomClick, setIsAddRoomClick] = useState(false);
   const navigate = useNavigate();
@@ -57,6 +58,21 @@ const Home = props => {
       }
     }
     fetchMyRoomList(setMyRoomList);
+    /**
+     * 
+     * Fetch public Rooms
+     */
+    const fetchPubicRooms = async (setPublicRooms) =>{
+      try{
+        const response = await roomApi.getPublichRoomOrderByMembers();
+        setPublicRooms(response.data.reverse());
+      }
+      catch(err)
+      {
+        toast.error(err);
+      }
+    }
+    fetchPubicRooms(setPublicRooms);
   }, [user]);
 
   const handleLogout = async () =>{
@@ -106,19 +122,18 @@ const Home = props => {
             </div>
               <div className={styles.my_room_list_container}>
                 {
-                  myRoomList?.map((roomItem) => <RoomItem key={roomItem?.room_id} roomId={roomItem?.room_id} avatar={user?.url_avatar} title={roomItem?.title} description={roomItem?.description} members={roomItem?.members} backgroundImage={roomItem.background.image_link}/>)
+                  myRoomList?.map((roomItem) => <RoomItem isPublicRoomItem={false} key={roomItem?.room_id} myRoomList={myRoomList} setMyRoomList={setMyRoomList} roomId={roomItem?.room_id} avatar={user?.url_avatar} title={roomItem?.title} description={roomItem?.description} members={roomItem?.members} backgroundImage={roomItem.background.image_link}/>)
                 }
               </div>
               <h1>Public Room</h1>
               <div className={styles.my_room_list_container}>
                 {
-                  myRoomList?.map((roomItem) => <RoomItem key={roomItem?.room_id}  roomId={roomItem?.room_id} avatar={user?.url_avatar} title={roomItem?.title} description={roomItem?.description} members={roomItem?.members} backgroundImage={roomItem.background.image_link}/>)
+                  publicRooms?.map((roomItem) => <RoomItem isPublicRoomItem={true} key={roomItem?.room_id} myRoomList={myRoomList} setMyRoomList={setMyRoomList} roomId={roomItem?.room_id} avatar={user?.url_avatar} title={roomItem?.title} description={roomItem?.description} members={roomItem?.members} backgroundImage={roomItem.background.image_link}/>)
                 }
               </div>
           </div>
         </div>
       </div>
-      <ToastContainer/>
     </div>
   );
 }

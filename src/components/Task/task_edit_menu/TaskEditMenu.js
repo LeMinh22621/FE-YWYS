@@ -5,7 +5,7 @@ import LabelManager from "./label_manager/LabelManager";
 import DateTimeManager from "./date_time_manager/DateTimeManager";
 
 const TaskEditMenu = props => {
-    const {labels, dueDate, ...other} = props;
+    const { roomId, labels, dueDate, ...other} = props;
     const [isLabelClick, setIsLabelClick] = useState(false);
     const [isEditDateTimeClick, setIsEditDateTimeClick] = useState(false);
 
@@ -28,7 +28,7 @@ const TaskEditMenu = props => {
                 <div className={styles.menu_item} onClick={handleEditDateTimeClick}><IOIcons.IoMdCalendar/> Date time</div>
             </div> 
             {
-                isLabelClick && <LabelManager handleLabelClick={handleLabelClick} labels={labels} handleDeleteCurrentLabelList={handleDeleteCurrentLabelList} handleAddCurrentLabelList={handleAddCurrentLabelList} handleEditALabel={other.handleEditALabel}/>
+                isLabelClick && <LabelManager roomId={roomId} handleLabelClick={handleLabelClick} labels={labels} handleDeleteCurrentLabelList={handleDeleteCurrentLabelList} handleAddCurrentLabelList={handleAddCurrentLabelList} handleEditALabel={other.handleEditALabel}/>
             }
             {
                 isEditDateTimeClick && <DateTimeManager dueDate={dueDate} handleEditDueDate={other.handleEditDueDate}/>

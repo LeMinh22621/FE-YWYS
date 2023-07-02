@@ -2,86 +2,48 @@ import React, { useEffect, useState } from "react";
 import styles from './TaskManager.module.css';
 import TaskList from '../TaskList/TaskList';
 import * as FaIcons from "react-icons/fa";
-import { TaskAbortError } from "@reduxjs/toolkit";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import {v4 as uuidv4} from 'uuid';
+import roomApi from "../../api/roomApi";
+import { toast } from "react-toastify";
 
 
 const TaskManager = props => {
-  const {displayTaskManager, zIndex, ...others} = props;
+  const {roomId, taskManagerData, displayTaskManager, zIndex, ...others} = props;
   const [curZIndex, setCurZIndex] = useState(zIndex.task);
 
-  const [todoList, setTodoList] = useState([
-    { key: 1,
-      title: "to do task 1",
-      isDone: true,
-      dueDate: {startDate: "2023-06-01", startTime: 37800, timeIntend: 3600},
-      labels: [
-          {key: 2, color: "rgb(0, 255, 0)"},
-          {key: 3, color: "rgb(0, 0, 255)"}
-      ]
-  },
-    { key: 2, title: "to do task 2", isDone: true, dueDate:{}, labels: []},
-    { key: 3, title: "to do task 3", isDone: false, dueDate:{}, labels:[]},
-    { key: 4, title: "to do task 4", isDone: false, dueDate:{}, labels:[] },
-    { key: 5, title: "to do task 5", isDone: false, dueDate:{}, labels:[] },
-    { key: 6, title: "to do task 6", isDone: false, dueDate:{}, labels:[] },
-    { key: 7, title: "to do task 7", isDone: false, dueDate:{}, labels:[] }
-  ]);
-  const [doingList, setDoingList] = useState([
-    { key: 8, title: "doing task 1", isDone: false, dueDate:{}, labels:[] },
-    { key: 9, title: "doing task 2", isDone: false, dueDate:{}, labels:[] },
-    { key: 10, title: "doing task 3", isDone: false, dueDate:{}, labels:[] },
-    { key: 11, title: "doing task 4", isDone: false, dueDate:{}, labels:[] }
-  ]);
-  const [doneList, setDoneList] = useState([
-    { key: 12, title: "done task 1", isDone: false, dueDate:{}, labels:[] },
-    { key: 13, title: "done task 2", isDone: false, dueDate:{}, labels:[] },
-    { key: 14, title: "done task 3", isDone: false, dueDate:{}, labels:[] },
-    { key: 15, title: "done task 4", isDone: false, dueDate:{}, labels:[] }
-  ]);
-
-  const [taskLists, setTaskLists] = useState([
-    { key: 1, title: 'To do', tasks: todoList },
-    { key: 2, title: 'Doing', tasks: doingList },
-    { key: 3, title: 'Done', tasks: doneList }
-  ]);
-
-  const [nextKey, setNextKey] = useState(taskLists.length+1);
+  const [taskLists, setTaskLists] = useState(taskManagerData);
+  useEffect( () => {
+    setTaskLists(taskManagerData);
+  }, [taskManagerData])
 
   const handleDeleteTaskList = (key) => {
-    setTaskLists(taskLists.filter((taskList) => taskList.key !== key))
-    console.log(key);
+    setTaskLists(taskLists?.filter((taskList) => taskList.task_manager_id !== key))
   }
 
+  const [newTaskList, setNewTaskList] = useState({task_manager_id: uuidv4(), task_manager_title: 'New List', task_list: []});
   const handleAddTaskList = () => {
-    const newTaskList = { key: nextKey, title: 'New List', tasks: []};
-    setTaskLists([...taskLists, newTaskList]);
-    setNextKey(nextKey + 1);
-  };
-
-  /// drag and drop tag
-  const handleDragOver = (event) => {
-    event.preventDefault();
-  };
-
-  const handleDrop = (event, listIndex) => {
-    // event.preventDefault();
-    const droppedTask = JSON.parse(event.dataTransfer.getData('task'));
-    const sourceListIndex = parseInt(event.dataTransfer.getData('listIndex'));
-
-    if (listIndex !== sourceListIndex) {
-      // Remove task from the source list
-      const sourceList = taskLists[sourceListIndex].tasks.filter((task) => task.key !== droppedTask.key);
-
-      // Add task to the target list
-      const targetList = [...taskLists[listIndex].tasks, droppedTask];
-
-      // Update taskLists state
-      const updatedTaskLists = [...taskLists];
-      updatedTaskLists[sourceListIndex].tasks = sourceList;
-      updatedTaskLists[listIndex].tasks = targetList;
-      setTaskLists(updatedTaskLists);
+    const createTaskManager = async () =>{
+      const response = await roomApi.createTaskManager({room_id: roomId, task_manager_title: 'New List'});
+      if(response.status)
+      {
+        setNewTaskList(response.data);
+        if(taskLists !== undefined && taskLists !== null)
+          setTaskLists([...taskLists, response.data]);
+        else
+          setTaskLists([response.data]);
+      }
+      else
+        toast.error(response.message);
     }
+    createTaskManager();
   };
+  // useEffect( () => {
+  //   if(taskLists !== undefined && taskLists !== null)
+  //     setTaskLists([...taskLists, newTaskList]);
+  //   else
+  //     setTaskLists([newTaskList]);
+  // }, [newTaskList]);
   
   /**
      * Drag drop motivational quote
@@ -131,15 +93,36 @@ const TaskManager = props => {
   const [currentTaskList, setCurrentTaskList] = useState(taskLists);
   const [currentDropDownTaskList, setCurrentDropDownTaskList] = useState(0);
   const handleSelectTaskList = (e) => {
-    setCurrentDropDownTaskList(parseInt(e.target.value));
+    setCurrentDropDownTaskList(e.target.value);
   }
 
   useEffect( () => {
-    currentDropDownTaskList === 0?setCurrentTaskList(taskLists):setCurrentTaskList(taskLists.filter( taskList => taskList.key === currentDropDownTaskList));
+    if(taskLists !== null && taskLists !== undefined)
+      currentDropDownTaskList === '0'?setCurrentTaskList(taskLists):setCurrentTaskList(taskLists.filter( taskList => `${taskList.task_manager_id}` === currentDropDownTaskList));
+    // eslint-disable-next-line 
   }, [currentDropDownTaskList])
-  useEffect( () => {
-    console.log(currentTaskList)
-  }, [currentTaskList])
+
+  /**
+   * Drag drop task list
+   */
+  const handleDragTaskListEnd = (result) => {
+    if (!result.destination) {
+      return;
+    }
+    console.log(result);
+    const items = Array.from(currentTaskList);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+  
+    // Update the state or perform any other necessary actions
+    setTaskLists(items);
+  };
+  const handleSaveTaskListTitle = (taskListId, newTaskListTitle) =>{
+    taskLists.filter(taskList => taskList.task_manager_id === taskListId)[0].task_manager_title = newTaskListTitle;
+  }
+  useEffect( () =>{
+    setCurrentTaskList(taskLists);
+  },[taskLists]);
   return (
     <div className={styles.task_manager_container} style={{
       position: 'fixed',
@@ -157,20 +140,46 @@ const TaskManager = props => {
               <select className={styles.dropdown_container} onChange={handleSelectTaskList}>
                   <option key={0} value={0}>All</option>
                   {
-                    taskLists?.map( (taskList) => <option key={taskList?.key} value={taskList?.key}>{taskList?.title}</option>)
+                    taskLists?.map( (taskList) => <option key={taskList?.task_manager_id} value={taskList?.task_manager_id}>{taskList?.task_manager_title}</option>)
                   }
               </select>
           </div>
       </div>
-      <div className={styles.task_manager_container_wrapper}>
-        {
-          currentTaskList?.map((taskList, listIndex) => (<TaskList onDragOver={(event) => handleDragOver(event)} onDrop={(event) => handleDrop(event, listIndex)} listIndex={listIndex} key={taskList.key} keyTaskList={taskList.key} section_title={taskList.title} tasks={taskList.tasks} handleDeleteTaskList={handleDeleteTaskList} />))
-        }
-        <button
-          className={styles.add_task_list_button}>
-          <FaIcons.FaPlus className={styles.add_icon} onClick={handleAddTaskList} />
-        </button>
-      </div>
+        <DragDropContext onDragEnd={handleDragTaskListEnd}>
+          <Droppable droppableId="task_list_manager" direction="horizontal">
+            {(provided) => (
+              <div className={styles.task_manager_container_wrapper} {...provided.droppableProps} ref={provided.innerRef}>
+                {currentTaskList?.map((taskList, listIndex) => (
+                  <Draggable key={taskList.task_manager_id} draggableId={`${taskList.task_manager_id}`} index={listIndex}>
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        className={styles.draggable_task_list}
+                      >
+                        <TaskList
+                          roomId={roomId}
+                          listIndex={listIndex}
+                          key={taskList.task_manager_id}
+                          keyTaskList={taskList.task_manager_id}
+                          section_title={taskList.task_manager_title}
+                          tasks={taskList.task_list}
+                          handleDeleteTaskList={handleDeleteTaskList}
+                          handleSaveTaskListTitle = {handleSaveTaskListTitle}
+                        />
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+                <button className={styles.add_task_list_button}>
+                  <FaIcons.FaPlus className={styles.add_icon} onClick={handleAddTaskList} />
+                </button>
+              </div>
+            )}
+          </Droppable>
+      </DragDropContext>
     </div>
   );
 }

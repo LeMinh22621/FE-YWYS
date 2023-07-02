@@ -11,7 +11,8 @@ export function getToken() {
 }
 
 export function removeToken() {
-  localStorage.removeItem(TOKEN_KEY);
+  if(localStorage.getItem(TOKEN_KEY))
+    localStorage.removeItem(TOKEN_KEY);
 }
 
 export function decodeToken() {

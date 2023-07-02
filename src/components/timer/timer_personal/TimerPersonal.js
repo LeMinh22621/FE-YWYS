@@ -39,6 +39,7 @@ const TimerPersonal = props => {
         SetCurrentLabel(labels[0]);
     }
     useEffect( () => {
+        
         if(counterTimer === 3)
         {
             const audio = new Audio("https://lhmfrontend.s3.amazonaws.com/SoundEffect/timerAudio1.mp3");

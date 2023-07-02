@@ -47,6 +47,7 @@
     color: #333;
     font-size: 16px;
     outline: none;
+    box-shadow: none;
 }
 
 .color_container{
@@ -74,5 +75,5 @@
     color: rgb(134, 132, 132);
 }
 .delete_icon:hover{
-    color: rgb(180, 179, 179);
+    color: rgb(255, 0, 0);
 }

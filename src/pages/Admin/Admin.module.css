@@ -1,0 +1,47 @@
+.admin_container{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+}
+.admin_container_wrapper{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+}
+.navbar_container{
+    display: flex;
+    flex-direction: row;
+    height: 8vh;
+    width: 100vw;
+    background-color: transparent;
+}
+.navbar_menu{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.navbar_item{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 25%;
+    background-color: #ffffff;
+    justify-content: center;
+    align-items: center;
+}
+a{
+    color: black;
+}
+
+.body_container{
+    display: flex;
+    flex-direction: row;
+    height: 92vh;
+    width: 100vw;
+    overflow: auto;
+}

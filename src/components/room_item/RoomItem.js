@@ -3,9 +3,10 @@ import styles from "./RoomItem.module.css";
 import roomApi from "../../api/roomApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import * as FaIcons from 'react-icons/fa';
 
 const RoomItem = props => {
-    const { roomId, avatar, backgroundImage, members, title, description} = props;
+    const { isPublicRoomItem, myRoomList, roomId, avatar, backgroundImage, members, title, description, ...others} = props;
     const navigate = useNavigate();
     const handleRoomClick = async () => {
         try{
@@ -13,7 +14,6 @@ const RoomItem = props => {
             const respone = await roomApi.getDetailRoom(roomId);
             if(respone.status)
             {
-                toast.success(respone.message);
                 navigate(`/room/${roomId}`, {replace:true});
             }
             else{
@@ -25,9 +25,34 @@ const RoomItem = props => {
             toast.error(err);
         }
     }
+    const handleDeleteRoom = async () => {
+        try{
+            const response = await roomApi.deleteRoomByRoomId(roomId);
+            console.log(response);
+            if(response.status)
+            {
+                toast.success(response.message);
+                others.setMyRoomList(myRoomList.filter(room => room.room_id !== roomId));
+            }
+            else{
+                toast.error(response.message);
+            }
+        }
+        catch(err)
+        {
+            toast.error(err);
+        }
+    }
     return (
-        <div onClick={handleRoomClick} className={styles.room_item_container}>
-            <div className={styles.room_item_container_wrapper} >
+        <div key={roomId} className={styles.room_item_container}>
+            {
+                !isPublicRoomItem&&
+                <div className={styles.delete_icon} onClick={handleDeleteRoom}>
+                    <FaIcons.FaTrash />
+                </div>
+            }
+            
+            <div className={styles.room_item_container_wrapper} onClick={handleRoomClick} >
                 <div className={styles.background_image} style={{backgroundImage: `url(${backgroundImage})`}}/>
                 <div className={styles.avatar} style={{backgroundImage: `url(${avatar})`}}/>
                 <div className={styles.body_item}>

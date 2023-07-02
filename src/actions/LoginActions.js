@@ -11,6 +11,7 @@ export const loginRequest = (email, password) => {
   return async (dispatch) => {
     dispatch({type: LOGIN_REQUEST});
     try {
+          removeToken();
           const response = await authApi.login({email, password});
           console.log(response);
           if(response.status && response.return_code === 200)
@@ -29,29 +30,7 @@ export const loginRequest = (email, password) => {
           }
       }
       catch (error) {
-        if(error.return_code === 401)
-        {
-          removeToken();
-          const newResponse = await authApi.login({email, password});
-          console.log(newResponse);
-          if(newResponse.status && newResponse.return_code === 200)
-          {
-            const token = newResponse.data.token;
-            const user = newResponse.data.user;
-
-            setToken(token);
-            dispatch({ type: LOGIN_SUCCESS, payload: user});
-            toast.success(newResponse.message);
-          }
-          else{
-            dispatch({ type: LOGIN_FAILURE, payload: error.message });
-            toast.error(newResponse.message);
-          }
-        }
-        else{
-          dispatch({ type: LOGIN_FAILURE, payload: error.message });
-          toast.error(error.message);
-        }
+        toast.error(error);
       }
   };
 };

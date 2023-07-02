@@ -1,8 +1,7 @@
 .motivational_quote_dropdown_container {
     height: fit-content;
     width: fit-content;
-    position: absolute;
-    top: 50%;
+    position: relative;
 }
 
 .motivational_quote_dropdown_container_wrapper {

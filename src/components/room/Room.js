@@ -2,25 +2,24 @@ import React, { useState } from "react";
 import styles from './room.module.css';
 import * as FaIcon from 'react-icons/fa';
 import * as TFIIcon from 'react-icons/tfi';
-
-import BackgroundMenu from "../background_menu/BackgroundMenu";
-import MotivationalQuote from "../motivational_quote/MotivationalQuote";
-import MotivationalQuoteDropdown from "../motivational_quote_dropdown/motivational_quote/MotivationalQuoteDropdown";
+import BackgroundMenu from "../../components/background_menu/BackgroundMenu";
+import MotivationalQuote from "../../components/motivational_quote/MotivationalQuote";
+import MotivationalQuoteDropdown from "../../components/motivational_quote_dropdown/motivational_quote/MotivationalQuoteDropdown";
 import roomApi from "../../api/roomApi";
 import { useEffect } from "react";
-import Timer from "../timer/Timer";
-import TaskManager from "../task_manager/TaskManager";
+import Timer from "../../components/timer/Timer";
+import TaskManager from "../../components/task_manager/TaskManager";
 import { TOKEN_KEY } from "../../utils/auth";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import * as IOIcons from "react-icons/io5";
+import VideoPlayer from "../../components/video_player/VideoPlayer";
 
 const Room = props => {
     // get Id Params
     const params = useParams();
     const roomId = params.room_id;
     const navigate = useNavigate();
-    
     const [zIndex, setZIndex] = useState({
         space: 100,
         timer: 100,
@@ -30,7 +29,7 @@ const Room = props => {
     const [displayTimer, SetDisplayTimer] = useState("none");
     const [displayQuote, setDisplayQuote] = useState("none");
     const [displayTaskManager, setDisplayTaskManager] = useState("none");
-
+    const [displayBackground, setDisplayBackground] = useState("none");
     const [isImageIconOpen, SetIsImageIconOpen] = useState(false);
     const [isQuoteIconClicked, SetIsQuoteIconClicked] = useState(false);
     const [isHiddenQuote, SetIsHiddenQuote] = useState(true);
@@ -39,8 +38,9 @@ const Room = props => {
     const [motivationalQuoteData, SetMotivationalQuoteData] = useState({});
     const [timerData, setTimerData] = useState({});
     const [backgroundData, setBackgroundData] = useState({});
+    const [currentBackgroundVideo, setCurrentBackgroundVideo] = useState(backgroundData);
     /**
-     * 
+     * close tab or browser
      */
     useEffect(() => {
 
@@ -69,20 +69,16 @@ const Room = props => {
         };
       }, []);
 
-    //
-    useEffect( () => {
-        console.log(timerData);
-    },[timerData]);
     const handleBackClick =  () => {
         // save changed
         const roomData = {
             motivational_quote_id: motivationalQuoteData.motivationalQuoteId,
             background_id: backgroundData.background_id,
-            timer_id: timerData.timer_id
+            timer: timerData
         }
         const updateFunc = async () => {
+            console.log(roomData);
             const updateResponse = await roomApi.updateRoom(roomId, roomData);
-            console.log(updateResponse.data);
             if(updateResponse.status)
             {
                 // the end step
@@ -94,7 +90,6 @@ const Room = props => {
             }
         } 
         updateFunc();
-        
     }
     const shuffleQuote = () => {
         const fetchRandomMotivationalQuote = async (SetMotivationalQuoteData, token) => {
@@ -127,29 +122,68 @@ const Room = props => {
     }
     const toggleImageMenu = () => {
         SetIsImageIconOpen(!isImageIconOpen);
+        setDisplayBackground( isImageIconOpen && displayBackground === "none"?"flex":"none");
     };
+    /**
+     * isTimerClick
+     */
     useEffect( () => {
         SetDisplayTimer(isTimerClicked && displayTimer === "none"? "block":"none");
         // eslint-disable-next-line
     },[isTimerClicked]);
+    /**
+     * is Hidden Quote Click
+     */
     useEffect( () => {
         setDisplayQuote(isHiddenQuote && displayQuote === "none"? "block":"none");
         // eslint-disable-next-line
     },[isHiddenQuote]);
+    /**
+     * isTaskManagerClick
+     */
     useEffect( () => {
         setDisplayTaskManager(isTaskClicked && displayTaskManager === "none"? "flex":"none");
         // eslint-disable-next-line
     },[isTaskClicked]);
+    /**
+     * isImageIconOpen
+     */
     useEffect( () => {
+        setDisplayBackground( isImageIconOpen && displayBackground === "none"?"flex":"none");
+        // eslint-disable-next-line
+    },[isImageIconOpen]);
+
+    const [taskManagerData, setTaskManagerData] = useState([]);
+    /**
+     * Fetch Detail by RoomId
+     */
+    useEffect( () => {
+        const fetchTaskManager = async (roomId) =>{
+            try{
+                const respone = await roomApi.getListTaskManagerByRoomId(roomId);  
+                if(respone.status)
+                    setTaskManagerData(respone.data);
+                else
+                    toast.error(respone.message);
+            }
+            catch(err)
+            {
+                toast.error(err);
+            }
+        }
         const fetchRoomData = async (roomId) => {
             try{
                 const respone = await roomApi.getDetailRoom(roomId);
+                console.log(respone.data);
                 if(respone.status)
                 {
                     SetMotivationalQuoteData(respone.data.motivational_quote);
                     setBackgroundData(respone.data.background);
                     setTimerData(respone.data.timer);
-                    console.log(respone.data);
+                    /**
+                     * fetch TaskManager and Task
+                     */
+                    fetchTaskManager(roomId);
                 }
                 else{
                     toast.error(respone.message);
@@ -162,9 +196,46 @@ const Room = props => {
         }
         fetchRoomData(roomId);
     },[roomId]);
-
+    /**
+     * Set Video as background
+     */
+    const [videoId, setVideoId] = useState('');
+    useEffect( () => {
+        const saveChangeBackground = async () =>{
+            try
+            {
+                const data = {
+                    background_id: backgroundData.background_id,
+                }
+                const response = await roomApi.updateRoom(roomId, data);
+                // eslint-disable-next-line
+                if(!response.status)
+                {
+                    toast.error(response.message);
+                }
+            }
+            catch(err)
+            {
+                toast.error(err);
+            }
+        }
+        if(backgroundData !== null && backgroundData !== undefined && Object.keys(backgroundData).length !== 0)
+        {
+            setCurrentBackgroundVideo(backgroundData.background_link);
+            saveChangeBackground();
+        }
+    }, [backgroundData]);
+    useEffect( () => {
+        if(currentBackgroundVideo !== null && currentBackgroundVideo !== undefined && currentBackgroundVideo !== '')
+        {
+            const regex = /(youtu.*be.*)\/(watch\?v=|embed\/|v|shorts|)(.*?((?=[&#?])|$))/gm;
+            const id = (regex.exec(currentBackgroundVideo));
+            setVideoId(id?id[3]:"none");
+        }
+    }, [currentBackgroundVideo]);
     return (
         <div className={styles.room_container}>
+            <VideoPlayer videoId={videoId}/>
             <div className={styles.room_container_wrapper}>
                 <div className={styles.header_container}>
                     <div className={styles.header_container_wrapper}>
@@ -196,20 +267,13 @@ const Room = props => {
                                 )
                             }
                         </div>
-                        
                         <Timer timerData={timerData} setTimerData={setTimerData} displayTimer = {displayTimer} zIndex={zIndex} setZIndex={setZIndex}/>
                         <MotivationalQuote motivationalQuoteData={motivationalQuoteData} displayQuote={displayQuote} zIndex={zIndex} setZIndex={setZIndex}/>
                     </div>
                 </div>
                 <>
-                <TaskManager displayTaskManager={displayTaskManager} zIndex={zIndex} setZIndex={setZIndex} />
-                    <h1> This is header</h1>
-                    {
-                        // background menu
-                        isImageIconOpen && (
-                            <BackgroundMenu />
-                        )
-                    }
+                    <TaskManager roomId={roomId} taskManagerData={taskManagerData} displayTaskManager={displayTaskManager} zIndex={zIndex} setZIndex={setZIndex} />
+                    <BackgroundMenu backgroundData={backgroundData} setBackgroundData={setBackgroundData} setCurrentBackgroundVideo={setCurrentBackgroundVideo} displayBackground={displayBackground} zIndex={zIndex} setZIndex={setZIndex}/>
                 </>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./MoreMenu.module.css";
 import * as FaIcons from 'react-icons/fa';
 

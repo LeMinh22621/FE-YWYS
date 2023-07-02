@@ -1,0 +1,117 @@
+.background_managerment_container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+.theme_table{
+    height: 40%;
+    width: 80%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+  .table_header {
+    display: flex;
+    background-color: azure;
+  }
+  
+  .header_item {
+    flex: 1 1;
+    padding: calc(0.6vw + 0.6vh);
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .table_body {
+    display: grid;
+    height: 80vh;
+    grid-template-rows: repeat(5, 6vh);
+    background-color: rgb(200, 198, 198);
+    justify-items: center;
+    align-items: center;
+    justify-content: start;
+    align-content: center;
+    overflow: auto;
+  }
+  
+  .body_row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    cursor: pointer;
+  }
+  .body_row_active{
+    background-color: aliceblue;
+  }
+  .body_row:hover{
+    background-color: aliceblue;
+  }
+  
+  .row_item {
+    padding: calc(0.6vw + 0.6vh);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    justify-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .row_item_id {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .delete_button{
+    width: 40%;
+    height: 100%;
+    border-radius: calc(0.3vw + 0.3vh);
+    outline: none;
+  }
+  .row_item>button{
+    width: 40%;
+    height: 100%;
+    border-radius: calc(0.3vw + 0.3vh);
+    outline: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .row_item>button:hover{
+    margin-left: 10%;
+  }
+  .delete_button:hover{
+    background: red;
+  }
+  
+  /* Add custom scrollbar styles */
+  .table_body::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .table_body::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+  }
+  
+  .table_body::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+  }
+  
+  .table_body::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }

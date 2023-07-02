@@ -15,8 +15,24 @@
     width: 20vw;
     gap: 1rem;
 }
-
+.list_of_task{
+    gap: calc(0.3vw + 0.3vh);
+}
+.task_list_body_container{
+    gap: calc(0.3vw + 0.3vh);
+}
 .is_grabbing {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    padding: 10px;
+    cursor: grab;
+    background-color: var(--list-background-color);
+    width: 20vw;
+    gap: 1rem;
     opacity: 0.8;
     cursor: grabbing;
+}
+.draggable_task{
+    height: fit-content;
 }

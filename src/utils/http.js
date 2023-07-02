@@ -7,11 +7,12 @@ class Http{
         this.instance = axios.create(
             {
                 baseURL: 'http://localhost:8089/api/v1',
-                // baseURL:'http://192.168.1.19:8089/api/v1',
+                // baseURL:'http://192.168.1.17:8089/api/v1',
                 // baseURL:'http://192.168.1.151:8089/api/v1',
                 // baseURL: 'https://8355-113-23-114-34.ngrok-free.app/api/v1',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Permissions-Policy': 'ch-ua-form-factor'
                 }
             }
         )

@@ -1,10 +1,10 @@
 .list_header_container{
-    height: 100%;
+    height: fit-content;
     width: 100%;
     --list-title-color: var(--ds-text,#172b4d);
 }
 .list_header_container_wrapper{
-    height: 5vh;
+    height: fit-content;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -12,18 +12,29 @@
     align-items: center;
     font-size: 20px;
 }
-.list_header_container_wrapper>h3{
+/* .list_header_container_wrapper>input{
     width: fit-content;
     font-weight: bold;
     text-align: start;
     text-transform: uppercase;
     color: var(--list-title-color);
     font-family: Georgia, 'Times New Roman', Times, serif;
-}
+    font-size: 18px;
+    border: none;
+    border-radius: 0;
+    width: 100%;
+    font-size: 18px;
+    padding: 0;
+    background-color: #efe8e8;
+    box-shadow: none
+} */
 .icon_container{
     display: flex;
     flex-direction: row;
     position: relative;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
 }
 .plus_icon{
     color: #b6b3b3;
@@ -42,5 +53,57 @@
 }
 
 .more_menu_container{
-    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.more_menu_container>button{
+    padding: calc(0.2vw + 0.2vh) calc(0.3vw + 0.3vh) calc(0.2vw + 0.2vh) calc(0.3vw + 0.3vh);
+    background-color: #5c97fd;
+    outline: none;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    border-radius: calc(0.3vw + 0.3vh);
+    border: none;
+}
+.more_menu_container>button:hover{
+    background-color: #005eff;
+    padding-left: calc(0.2vw + 0.2vh);
+}
+.text_area_wrapper {
+    display: grid;
+    height: fit-content;
+}
+
+.text_area_wrapper::after {
+    content: attr(data-replicated-value) " ";
+    white-space: pre-wrap;
+    visibility: hidden;
+}
+
+.text_area_wrapper>textarea {
+    font-style: italic;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    height: auto;
+    min-height: 1em;
+    resize: none;
+    overflow: hidden;
+    text-transform: uppercase;
+    text-align: start;
+    color: var(--list-title-color);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+}
+
+.text_area_wrapper>textarea,
+.text_area_wrapper::after {
+    font: inherit;
+    grid-area: 1 / 1 / 2 / 2;
+    word-wrap: break-word;
+    white-space: pre-line;
+    width: 16vw;
 }

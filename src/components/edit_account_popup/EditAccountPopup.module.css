@@ -1,0 +1,113 @@
+.edit_account_container{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(25, 24, 24);
+    opacity: 0.95;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}   
+
+.edit_account_container_wrapper{
+    background-color: #ddd;
+    height: 80vh;
+    width: 50vw;
+    border-radius: calc(1.5vw + 1.5vh);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.header_container{
+    height: 10%;
+    width: 100%;
+    background-color: #ffffff;
+    border-start-end-radius: calc(1.5vw + 1.5vh);
+    border-start-start-radius: calc(1.5vw + 1.5vh);
+}
+
+.close_icon{
+    font-size: calc(1.5vw + 1.5vh);
+    color: #555353;
+    cursor: pointer;
+    float: right;
+    margin-right: 2%;
+    margin-top: 2%;
+}
+.close_icon:hover{
+    color: red;
+}
+.body_container{
+    height: 90%;
+    width: 100%;
+    background-color: #ddd;
+    border-end-end-radius: calc(1.5vw + 1.5vh);
+    border-end-start-radius: calc(1.5vw + 1.5vh);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.avatar_image{
+    height: 50%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: calc(0.2vw + 0.2vh);
+}
+.avatar_image>img{
+    height: calc(10vh + 10vw);
+    width: calc(10vh + 10vw);
+    background-size: cover;
+    border-radius: 50%;
+}
+.avatar_image>span{
+    color: black;
+}
+.avatar_image>input{
+    border: none;
+    border-radius: 0;
+    width: 80%;
+    height: 20%;
+    font-size: calc(1.2vw + 1.2vh);
+    background-color: #ffffff;
+    box-shadow: none;
+    font-size: calc(1vw + 1vh);
+    padding: calc(0.2vw + 0.2vh);
+}
+.inputs{
+    height: 40%;
+    width: 100%;
+    display: flex;
+    justify-items: start;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.inputs>input{
+    border: none;
+    border-radius: calc(0.5vw + 0.5vh);
+    width: calc(100% - calc(1vw + 1vh) * 2);
+    font-size: calc(1vw + 1vh);
+    padding: calc(1vw + 1vh);
+    background-color: #efe8e8;
+    box-shadow: inset 0px -1px 0px 0px rgba(173, 170, 170, 0.7);
+}
+.body_container>button{
+    height: 8%;
+    width: 20%;
+    border: none;
+    background-color: rgb(0, 191, 57);
+    border-radius: calc(1vw + 1vh);
+    cursor: pointer;
+}
+.body_container>button:hover{
+    background-color: rgb(6, 255, 80);
+    margin-left: 2%;
+}
