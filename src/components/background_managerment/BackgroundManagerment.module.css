@@ -10,7 +10,6 @@
 .theme_table{
     height: 40%;
     width: 80%;
-    position: relative;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -50,7 +49,7 @@
     cursor: pointer;
   }
   .body_row_active{
-    background-color: aliceblue;
+    background-color: rgb(52, 150, 236);
   }
   .body_row:hover{
     background-color: aliceblue;
@@ -65,7 +64,7 @@
     justify-items: center;
     display: flex;
     flex-wrap: nowrap;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
   }
   .row_item_id {
@@ -81,7 +80,7 @@
     outline: none;
   }
   .row_item>button{
-    width: 40%;
+    width: fit-content;
     height: 100%;
     border-radius: calc(0.3vw + 0.3vh);
     outline: none;
@@ -92,9 +91,9 @@
     align-items: center;
   }
   .row_item>button:hover{
-    margin-left: 10%;
+    background-color: lime;
   }
-  .delete_button:hover{
+  .row_item>.delete_button:hover{
     background: red;
   }
   

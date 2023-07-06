@@ -1,13 +1,13 @@
-.account_managerment_container{
+.motivational_quote_container{
     height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: nowrap;
 }
-.account_table{
+.table{
   height: 80%;
   width: 80%;
   position: relative;
@@ -19,7 +19,7 @@
   display: flex;
   background-color: azure;
 }
-
+  
 .header_item {
   flex: 1 1;
   padding: calc(0.6vw + 0.6vh);
@@ -31,33 +31,38 @@
   justify-content: center;
   align-items: center;
 }
-
+  
 .table_body {
   display: grid;
-  height: 80vh;
-  grid-template-rows: repeat(11, 6vh);
   background-color: rgb(200, 198, 198);
   justify-items: center;
   align-items: center;
   justify-content: start;
-  align-content: center;
   overflow: auto;
+  align-content: space-between;
 }
-
+  
 .body_row {
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  /* height: fit-content; */
 }
+.body_row_active{
+  background-color: rgb(52, 150, 236);
+}
+.body_row:hover{
+  background-color: aliceblue;
+}
+  
 .row_item {
   padding: calc(0.6vw + 0.6vh);
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: left;
-  justify-items: start;
+  justify-items: center;
   display: flex;
   flex-wrap: nowrap;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   align-items: center;
 }
 .delete_button{
@@ -68,8 +73,8 @@
 }
 
 .row_item>button{
-  width: 70%;
-  height: 100%;
+  width: 30%;
+  height: 4vh;
   border-radius: calc(0.3vw + 0.3vh);
   outline: none;
   border: none;

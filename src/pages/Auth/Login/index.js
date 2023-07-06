@@ -15,7 +15,7 @@ const Login = props => {
    */
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
-  const isLogingIn = useSelector((state) => state.login.isLogingIn);
+  const userInfor = useSelector((state) => state.login.user);
   const handleLogin = (e) => {
     e.preventDefault();
     try {
@@ -27,7 +27,14 @@ const Login = props => {
   }
   useEffect( () => {
     if(isLoggedIn)
-      navigate("/home", {replace:true});
+    {
+      console.log(userInfor)
+      if(userInfor.role === "USER")
+        navigate("/home", {replace:true});
+      else
+        navigate("/admin", {replace:true})
+    }
+      
       // eslint-disable-next-line
   }, [isLoggedIn])
   return (
@@ -43,7 +50,7 @@ const Login = props => {
           <input onChange={e => setPassword(e.target.value)} type={"password"} placeholder={"Enter your password"} required />
         </div>
         <div id={styles.button} className={styles.password}>
-          <button onClick={handleLogin} disabled={isLogingIn} >{isLogingIn?"Logingin":"Login"}</button>
+          <button onClick={handleLogin}>{"Login"}</button>
         </div>
       </div>
       <div id={styles.signup}>

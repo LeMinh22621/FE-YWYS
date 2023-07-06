@@ -25,8 +25,8 @@ export const loginRequest = (email, password) => {
           }
           else
           {
-            dispatch({ type: LOGIN_FAILURE, payload: response.message });
             toast.error(response.message);
+            dispatch({ type: LOGIN_FAILURE, payload: response.message });
           }
       }
       catch (error) {

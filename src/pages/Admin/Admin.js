@@ -5,21 +5,23 @@ import AccountManagerment from "../../components/account_managerment/AccountMana
 import BackgroundManagerment from "../../components/background_managerment/BackgroundManagerment";
 import authApi from "../../api/authApi";
 import { toast } from "react-toastify";
-import { removeToken } from "../../utils/auth";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../../actions/LoginActions";
+import { useDispatch } from "react-redux";
+import MotivationalQuoteManagerment from "../../components/motivational_quote_managerment/MotivationalQuoteManagerment";
 
 const Admin = props => {
     const navigation = useNavigate();
-    const navBarItems = ['', 'Accounts', 'Backgrounds', ''];
+    const navBarItems = ['', 'Accounts', 'Backgrounds', 'Motivational Quote', ''];
     const [activeItem, setActiveItem] = useState(1);
+    const dispatch = useDispatch();
     const handleLogout = () => {
         authApi.logout()
             .then(response => {
                 if(response.status)
                 {
-                    removeToken();
+                    dispatch(logout());
                     navigation("/login", {replace: true});
-                    toast.success(response.message);
                 }
                 else{
                     toast.error(response.message);
@@ -41,23 +43,32 @@ const Admin = props => {
                             navBarItems.map( (narBarItem, index) =>
                                 (
                                     <div key={index} className= {styles.navbar_item} 
-                                        style={index === activeItem-1? {
+                                        style={
+                                            index === activeItem-2? {
+                                                cursor: `${activeItem === 3?'pointer':'default'}`
+                                            }:index === activeItem-1? {
                                                 borderEndEndRadius: 'calc(1.5vw + 1.5vh)',
-                                                cursor: `${activeItem === 2?'pointer':'default'}`
+                                                cursor: `${activeItem === 2 || activeItem === 3?'pointer':'default'}`
                                             }: index === activeItem? {
                                                 borderStartStartRadius: 'calc(1.5vw + 1.5vh)',
                                                 borderStartEndRadius: 'calc(1.5vw + 1.5vh)',
                                                 backgroundColor: 'transparent'
                                             }: index === activeItem + 1?{
                                                 borderEndStartRadius: 'calc(1.5vw + 1.5vh)',
+                                                cursor: `${activeItem === 1|| activeItem === 2?'pointer':'default'}`,
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                flexWrap: 'nowrap'
+                                            }:index === activeItem + 2?{
                                                 cursor: `${activeItem === 1?'pointer':'default'}`,
                                                 display: 'flex',
-                                                justifyContent: 'flex-end',
+                                                justifyContent: 'center',
                                                 alignItems: 'center',
                                                 flexWrap: 'nowrap'
                                             }:{
                                                 display: 'flex',
-                                                justifyContent: 'flex-end',
+                                                justifyContent: 'center',
                                                 alignItems: 'center',
                                                 flexWrap: 'nowrap'
                                             }
@@ -65,18 +76,20 @@ const Admin = props => {
                                         onClick={
                                             () => 
                                             {
-                                                if(index === (0||3))
+                                                if(index === (0||4))
                                                     return;
                                                 else if(index === 1)
                                                     setActiveItem(1);
                                                 else if(index === 2)
                                                     setActiveItem(2);
+                                                else if(index === 3)
+                                                    setActiveItem(3);
                                             }
                                         }
                                     >
                                         {narBarItem}
                                         {
-                                            index === 3 && <button onClick={handleLogout}>Logout</button>
+                                            index === 4 && <button onClick={handleLogout}>Logout</button>
                                         }
                                     </div>
                                 )
@@ -88,8 +101,10 @@ const Admin = props => {
                 {
                     activeItem === 1?
                     <AccountManagerment/>
-                    :
+                    :activeItem === 2?
                     <BackgroundManagerment/>
+                    :
+                    <MotivationalQuoteManagerment/>
                 }
                 </div>
             </div>
