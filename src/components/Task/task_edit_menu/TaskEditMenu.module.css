@@ -4,13 +4,15 @@
     background-color: transparent;
     cursor: default;
     position: absolute;
-    margin-left: 2vw;
+    margin-left: 5%;
 }
 .menu_container_wrapper{
     display: flex;
+    width: 15vw;
     flex-direction: column;
     padding: 5px;
     gap: 10px;
+    flex-wrap: nowrap;
 }
 .menu_item{
     display: flex;

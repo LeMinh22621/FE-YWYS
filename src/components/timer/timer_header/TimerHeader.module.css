@@ -28,6 +28,10 @@
     cursor: pointer;
     margin:  0 0 calc(0.5vh + 0.5vw) calc(0.8vh + 0.8vw);
 }
+.setting_icon_disable{
+    color: rgb(145, 145, 145);
+    margin:  0 0 calc(0.5vh + 0.5vw) calc(0.8vh + 0.8vw);
+}
 
 .setting_icon:hover {
     opacity: 0.7;

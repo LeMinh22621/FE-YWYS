@@ -2,6 +2,15 @@
     height: fit-content;
     width: 100%;
 }
+.label_container>button{
+    padding: calc(0.4vw + 0.4vh);
+    width: 100%;
+    background-color: rgb(16, 16, 246);
+    cursor: pointer;
+    border-radius: calc(0.6vw + 0.6vh);
+    font-size: calc(0.8vh + 0.8vw);
+    border: none;
+}
 .label_container_wrapper{
     height: fit-content;
     width: 100%;
@@ -20,7 +29,8 @@
 }
 .input_container>input{
     height: 18px;
-    width: 18px;
+    width: 18px;    
+    box-shadow: none;
 }
 .title_color_container{
     height: fit-content;
@@ -51,11 +61,11 @@
 }
 
 .color_container{
-    height: 3vh;
-    width: 3vh;
+    height: calc(1vw + 0.5vh);
+    width: calc(1vw + 1vh);
     border-radius: 50%;
     outline: 1px solid rgb(0, 0, 0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 1);
     cursor: pointer;
     margin-left: 1rem;
 }

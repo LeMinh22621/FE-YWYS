@@ -4,7 +4,7 @@ import * as GRIcons from 'react-icons/gr';
 import { useEffect } from 'react';
 
 const BackgroundSlide = props => {
-    const { currentBackground, backgroundList, ...others } = props;
+    const { currentBackground, isYourRoom, backgroundList, ...others } = props;
     
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -37,9 +37,9 @@ const BackgroundSlide = props => {
     return (
         <div className= {styles.slider_container}>
             <div className= {styles.slider_container_wrapper}>
-                <button className={styles.slider_button} onClick={handlePrevClick}> <GRIcons.GrFormPrevious/> </button>
-                <img onClick={handleBackgroundClick} className={styles.slider_image} src={currentBackground?.image_link} alt={"Have no background!"} />
-                <button className={styles.slider_button} onClick={handleNextClick}> <GRIcons.GrFormNext color='white'/> </button>
+                <button disabled={!isYourRoom} className={styles.slider_button} onClick={handlePrevClick}> <GRIcons.GrFormPrevious/> </button>
+                <img disabled={!isYourRoom} onClick={handleBackgroundClick} className={styles.slider_image} src={currentBackground?.image_link} alt={"Have no background!"} />
+                <button disabled={!isYourRoom} className={styles.slider_button} onClick={handleNextClick}> <GRIcons.GrFormNext color='white'/> </button>
             </div>
         </div>
       );

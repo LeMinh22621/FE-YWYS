@@ -38,18 +38,19 @@ const BackgroundDetail = props => {
         formData.append("backgroundRequest", new Blob([JSON.stringify(data)], { type: "application/json" }));
   
         adminApi.updateBackground(backgroundData.background_id, formData,
-          {
-              headers:{
-                  'Accept': 'application/json, text/plain, image/*, */*',
-                  "Content-Type": "multipart/form-data"
-              }
-          }
-      ).then((response) => response.json())
-      .then((dataResponse) => {
-          console.log(dataResponse);
-      }).catch( err => {
-          toast.error(err);
-      });
+        {
+            headers:{
+                'Accept': 'application/json, text/plain, image/*, */*',
+                "Content-Type": "multipart/form-data"
+            }
+        }
+        ).then((response) => response.json())
+        .then((dataResponse) => {
+                others.cancelFunc(false)
+                console.log(dataResponse);
+        }).catch( err => {
+                toast.error(err);
+        });
     }
     return (
         <div className={styles.background_container}>

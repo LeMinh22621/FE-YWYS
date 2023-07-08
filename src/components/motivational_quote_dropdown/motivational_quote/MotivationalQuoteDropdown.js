@@ -4,7 +4,7 @@ import * as AIIcons from "react-icons/ai";
 import * as CGIcons from "react-icons/cg";
 
 const MotivationalQuoteDropdown = props => {
-    const {...others} = props;
+    const {isYourRoom, ...others} = props;
     const [isHidden, SetIsHidden] = useState(true);
 
     const hiddenOnClick = () => {
@@ -23,11 +23,14 @@ const MotivationalQuoteDropdown = props => {
                         <AIIcons.AiFillEyeInvisible size={23}/>
                         Hidden
                     </li>
-
-                    <li onClick={shuffleQuoteOnClick}>
-                        <CGIcons.CgArrowsExchange size={23} />
-                        Shuffle
-                    </li>
+                    {
+                        isYourRoom && 
+                        <li onClick={shuffleQuoteOnClick}>
+                            <CGIcons.CgArrowsExchange size={23} />
+                            Shuffle
+                        </li>
+                    }
+                    
                 </ul>
             </div>
         </div>

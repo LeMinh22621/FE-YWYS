@@ -115,7 +115,7 @@
     color: #a19f9f;
 }
 .card_container:hover .icon:hover {
-    color: #8b8b8b
+    color: #2a2929
 }
 .card_container:hover .icon_delete:hover {
     color: #ff0000;

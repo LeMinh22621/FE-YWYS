@@ -45,6 +45,7 @@ const NewRoomForm = props => {
     },[title, description, isPublic])
     return (
         <div className={styles.form_container}>
+            <div className={styles.background_container}/>
             <div className={styles.form_container_wrapper}>
                 <div className={styles.form_header_container}>
                     <h2>New Room</h2>

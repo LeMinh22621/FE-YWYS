@@ -9,7 +9,7 @@ import roomApi from "../../api/roomApi";
 import { useEffect } from "react";
 import Timer from "../../components/timer/Timer";
 import TaskManager from "../../components/task_manager/TaskManager";
-import { TOKEN_KEY } from "../../utils/auth";
+import { TOKEN_KEY, decodeToken, getToken } from "../../utils/auth";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import * as IOIcons from "react-icons/io5";
@@ -152,7 +152,8 @@ const Room = props => {
         setDisplayBackground( isImageIconOpen && displayBackground === "none"?"flex":"none");
         // eslint-disable-next-line
     },[isImageIconOpen]);
-
+    // check is your room
+    const [isYourRoom, setIsYourRoom] = useState(false);
     const [taskManagerData, setTaskManagerData] = useState([]);
     /**
      * Fetch Detail by RoomId
@@ -160,7 +161,8 @@ const Room = props => {
     useEffect( () => {
         const fetchTaskManager = async (roomId) =>{
             try{
-                const respone = await roomApi.getListTaskManagerByRoomId(roomId);  
+                const respone = await roomApi.getListTaskManagerByRoomId(roomId); 
+                console.log(respone)
                 if(respone.status)
                     setTaskManagerData(respone.data);
                 else
@@ -177,13 +179,18 @@ const Room = props => {
                 console.log(respone.data);
                 if(respone.status)
                 {
+                    // set detail room data
                     SetMotivationalQuoteData(respone.data.motivational_quote);
                     setBackgroundData(respone.data.background);
                     setTimerData(respone.data.timer);
+                    console.log(respone.data.timer)
                     /**
                      * fetch TaskManager and Task
                      */
                     fetchTaskManager(roomId);
+                    // check is your room
+                    const userData = decodeToken(getToken());
+                    setIsYourRoom(userData.email === respone.data.user.email);
                 }
                 else{
                     toast.error(respone.message);
@@ -224,6 +231,7 @@ const Room = props => {
             setCurrentBackgroundVideo(backgroundData.background_link);
             saveChangeBackground();
         }
+        // eslint-disable-next-line
     }, [backgroundData]);
     useEffect( () => {
         if(currentBackgroundVideo !== null && currentBackgroundVideo !== undefined && currentBackgroundVideo !== '')
@@ -263,17 +271,17 @@ const Room = props => {
                             </ul>
                             {
                                 isQuoteIconClicked && (
-                                    <MotivationalQuoteDropdown shuffleQuote={shuffleQuote} hiddenQuoteClick={hiddenQuoteClick} />
+                                    <MotivationalQuoteDropdown isYourRoom={isYourRoom} shuffleQuote={shuffleQuote} hiddenQuoteClick={hiddenQuoteClick} />
                                 )
                             }
                         </div>
-                        <Timer timerData={timerData} setTimerData={setTimerData} displayTimer = {displayTimer} zIndex={zIndex} setZIndex={setZIndex}/>
+                        <Timer isYourRoom={isYourRoom} timerData={timerData} setTimerData={setTimerData} displayTimer = {displayTimer} zIndex={zIndex} setZIndex={setZIndex}/>
                         <MotivationalQuote motivationalQuoteData={motivationalQuoteData} displayQuote={displayQuote} zIndex={zIndex} setZIndex={setZIndex}/>
                     </div>
                 </div>
                 <>
                     <TaskManager roomId={roomId} taskManagerData={taskManagerData} displayTaskManager={displayTaskManager} zIndex={zIndex} setZIndex={setZIndex} />
-                    <BackgroundMenu backgroundData={backgroundData} setBackgroundData={setBackgroundData} setCurrentBackgroundVideo={setCurrentBackgroundVideo} displayBackground={displayBackground} zIndex={zIndex} setZIndex={setZIndex}/>
+                    <BackgroundMenu isYourRoom={isYourRoom} backgroundData={backgroundData} setBackgroundData={setBackgroundData} setCurrentBackgroundVideo={setCurrentBackgroundVideo} displayBackground={displayBackground} zIndex={zIndex} setZIndex={setZIndex}/>
                 </>
             </div>
         </div>

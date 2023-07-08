@@ -31,6 +31,7 @@
   justify-content: center;
   flex-wrap: nowrap;
   color: #cfcdd4;
+  margin-left: 5vw;
 }
 .home_icon_container:hover{
   cursor: pointer;
@@ -65,6 +66,7 @@
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+  margin-right: 5vw;
 }
 .profile_infor>span{
   color: rgb(14, 14, 14);
@@ -89,30 +91,38 @@
   cursor: pointer;
 } 
 .avatar_menu{
-  margin-top: 10%;
-  height: 100%;
-  width: 100%;
-  background-color: #858383;
   display: flex;
+  width: 10vw;
   flex-direction: column;
-  gap: 0.5vh;
+  padding: 5px;
+  gap: 10px;
   flex-wrap: nowrap;
-  align-items: center;
-  justify-content: center;
+  position: fixed;
+  top: 10vh;
+  left: 89vw;
 }
 .avatar_menu>span{
-  height: 80%;
-  width: 90%;
-  background-color: #333536;
-  border-radius: calc(0.2vh + 0.2vw);
   display: flex;
-  flex-wrap: nowrap;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  background-color: #0009;
+  border-radius: 5px;
+  color: #c7d1db;;
+  margin: 0 0 4px 8px;
+  padding: calc(0.6vw + 0.6vh) calc(0.8vw + 0.8vh) calc(0.6vw + 0.6vh) calc(0.7vw + 0.7vh);
   cursor: pointer;
 }
+.avatar_menu>span:hover{
+  background: #000c;
+  color: #fff;
+  text-decoration: none;
+  transform: translateX(5px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
 .avatar_container_wrapper:hover{
+  background: #000c;
+  color: #fff;
+  text-decoration: none;
+  transform: translateX(5px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 .body_container{

@@ -1,63 +1,51 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from './LabelManager.module.css';
-import { useState } from "react";
 import Label from "./label/Label";
 import * as AIIcons from "react-icons/ai";
 import roomApi from "../../../../api/roomApi";
 import { toast } from "react-toastify";
 
 const LabelManager = props => {
-    const { roomId, labels, ...other} = props;
-
-    const [labelList, setLabelList] = useState([]);
-
-    useEffect( () => {
-        const fetchLabelListByRoomId = async () =>
-        {
-            try{
-                const respone = await roomApi.getLabelListByRoomId(roomId);
-                
-                if(respone.status)
-                {
-                    setLabelList(respone.data);
-                }
-                else{
-                    toast.error(respone.message);
-                }
-            }
-            catch(err)
-            {
-                toast.error(err);
-            }
-        }
-        
-        fetchLabelListByRoomId(roomId);
-        // eslint-disable-next-line
-    },[]);
-
-    const [nextKey, setNextKey] = useState(labelList.length + 1);
+    const { roomId, roomLabels, taskId, labels, ...other} = props;
     const handleLabelClick = () => other.handleLabelClick();
 
-    const handleDeleteCurrentLabelList = (key) => other.handleDeleteCurrentLabelList(key);
     const handleDeleteLable = (key) => {
-        setLabelList(labelList.filter( (label) => label.key !== key));
-        handleDeleteCurrentLabelList(key);
+        roomApi.deleteLabel(key).then(
+            response => {
+                console.log(response);
+                if(response.status)
+                {
+                    other.setRoomLabels(roomLabels.filter(label => label.label_id !== key));
+                    other.handleDeleteCurrentLabelList(key);
+                }
+                return response;
+            }
+        ).catch(err => toast.error(err))
     }
-    const handleAddCurrentLabelList = (newLabel) => other.handleAddCurrentLabelList(newLabel);
     const handleAddLabel = () => {
-        const newLabel = {key: nextKey, isSelected: true, color: "white", name: "new Label"}
-        setNextKey(nextKey + 1);
-        setLabelList([...labelList,newLabel]);
+        const newLabel = {color: "white", name: "new Label"}
+        const data = {
+            "room_id": roomId,
+            ...newLabel
+        }
+        roomApi.createLabel(taskId, data).then(
+            response => {
+                console.log(response);
+                if(response.status)
+                {
+                    other.setRoomLabels([...roomLabels,response.data]);
+                    other.handleAddCurrentLabelList(response.data)
+                }
+                else
+                    toast.error(response.message);
+                return response;
+            }
+        ).catch(err => toast.error(err));
+        
     }
-    
+
     labels?.forEach((currentLabel) =>{
-        // setLabelList([...labelList.map((label) =>{
-        //     if(label.label_id === currentLabel.label_id && label.isSelected === false)
-        //         return {...label, isSelected: true}
-        //     else 
-        //         return {...label, isSelected: false}
-        // })]);
-        let currentLabelList = labelList.filter( (label) => label.label_id === currentLabel.label_id);
+        let currentLabelList = roomLabels.filter( (label) => label.label_id === currentLabel.label_id);
         currentLabelList.forEach( element => element.isSelected = true);
     });
     return (
@@ -69,7 +57,19 @@ const LabelManager = props => {
                 </div>
                 <div className={styles.label_list}>
                     {
-                        labelList?.map( (label) => (<Label key={label.label_id} keyLabel={label.label_id} isSelected={label.isSelected} color={label.color} title={label.name} handleDeleteLable={handleDeleteLable} handleAddLabel={handleAddLabel} handleAddCurrentLabelList={handleAddCurrentLabelList} handleDeleteCurrentLabelList={handleDeleteCurrentLabelList} handleEditALabel={other.handleEditALabel}/>))
+                        roomLabels?.map( (label) => (<Label 
+                            setCurrentLabelList={other.setCurrentLabelList}
+                            key={label.label_id} taskId={taskId} 
+                            keyLabel={label.label_id} 
+                            isSelected={labels.filter(hasLabel => hasLabel.label_id === label.label_id).length !== 0}
+                            color={label.color} 
+                            title={label.name} 
+                            handleDeleteLable={handleDeleteLable} 
+                            handleAddLabel={handleAddLabel} 
+                            handleAddCurrentLabelList={other.handleAddCurrentLabelList} 
+                            handleDeleteCurrentLabelList={other.handleDeleteCurrentLabelList} 
+                            handleEditALabel={other.handleEditALabel}/>
+                        ))
                     }
                 </div>
                 <div className={styles.add_label_container}>

@@ -8,7 +8,7 @@ import roomApi from '../../api/roomApi';
 import { toast } from 'react-toastify';
 import { format } from 'date-fns';
 const Task = props => {
-    const { roomId, title, keyTask, isDone, labels, dueDate, ...others } = props;
+    const { roomId, roomLabels, title, keyTask, isDone, dueDate, ...others } = props;
     const [isChecked, setIsChecked] = useState(isDone);
     const [currentValue, setCurrentValue] = useState(title);
 
@@ -17,14 +17,12 @@ const Task = props => {
 
     const [currentLabelList, setCurrentLabelList] = useState([]);
     const [currentDueDate, setCurrentDueDate] = useState(dueDate);
-
     /**
      * Save task change
      */
     const [isChangedTask, setIsChangedTask] = useState(false);
     const handleSaveButtonClick = () => {
         const saveTask = async () => {
-
             const data = {
                 is_done: isChecked,
                 task_intend: currentDueDate.timeIntend,
@@ -43,8 +41,20 @@ const Task = props => {
     }
 
     useEffect( () => {
-        setCurrentLabelList(labels?.map(taskLabel => taskLabel.label))
-    }, [labels])
+        roomApi.fetchLabelsOfTask(keyTask).then(
+            response => {
+                if(response.return_code === 200)
+                {
+                    setCurrentLabelList(response.data);
+                }
+                return response;
+            }
+        ).catch(
+            err => toast.error(err)
+        );
+        // eslint-disable-next-line
+    }, []);
+
     // label list
     const handleEditALabel = (key, newColor) => {
         const labelIndex = currentLabelList?.findIndex((label) => label.label_id === key);
@@ -56,6 +66,7 @@ const Task = props => {
         setCurrentLabelList([...currentLabelList, newLabel]);
     }
     const handleDeleteCurrentLabelList = (key) => {
+        console.log(key, currentLabelList);
         setCurrentLabelList(currentLabelList?.filter((label) => label.label_id !== key));
     }
 
@@ -93,16 +104,24 @@ const Task = props => {
         const minutesString = String(minutes).padStart(2, '0');
         return `${hoursString}:${minutesString}`;
     }
-    /**
-     * set ischanged task when Current label list changed
-     */
+    // if roomLabels is changed
     useEffect( () => {
-        if(currentLabelList !== null && currentLabelList !== undefined && currentLabelList.length !== 0)
-            setIsChangedTask(true);
-    }, [currentLabelList])
-    /**
-     * set ischanged task when currentDueDate changed
-     */
+        if(currentLabelList != null && roomLabels != null)
+        {
+            let intersection = [];
+            for (let i = 0; i < currentLabelList.length; i++) {
+                const found = roomLabels.find(function (element) {
+                    return element.label_id === currentLabelList[i].label_id;
+                });
+                
+                if (found) {
+                intersection.push(currentLabelList[i]);
+                }
+            }
+            setCurrentLabelList(intersection);
+        }
+        // eslint-disable-next-line
+    }, [roomLabels])
     const isDefaultDueDate = () => currentDueDate?.timeIntend === 0 && currentDueDate?.startTime === 0 && currentDueDate?.startDate === '1970-01-01T00:00:00.000+00:00';
     useEffect( () => {
         if(currentDueDate !== null && currentDueDate !== undefined && !isDefaultDueDate())
@@ -110,7 +129,8 @@ const Task = props => {
             const convertedDate = new Date(currentDueDate?.startDate).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })
             currentDueDate.startDate = format(new Date(convertedDate), 'yyyy-MM-dd');
         }
-    }, [currentDueDate])
+        // eslint-disable-next-line
+    }, [currentDueDate]);
     return (
         <div key={`${keyTask}`} className={styles.card_container}>
             <div className={styles.task_label_list}>
@@ -129,7 +149,19 @@ const Task = props => {
                         <FIIcons.FiEdit2 className={styles.icon} size={15} onClick={handleEditTask} />
                     </div>
                     {
-                        isEditTaskClick && <TaskEditMenu roomId={roomId} labels={currentLabelList} dueDate={currentDueDate} handleAddCurrentLabelList={handleAddCurrentLabelList} handleDeleteCurrentLabelList={handleDeleteCurrentLabelList} handleEditALabel={handleEditALabel} handleEditDueDate={handleEditDueDate} />
+                        isEditTaskClick && <TaskEditMenu
+                        setCurrentLabelList={setCurrentLabelList}
+                        taskId = {keyTask} 
+                        roomLabels={roomLabels} 
+                        setRoomLabels={others.setRoomLabels} 
+                        roomId={roomId} 
+                        labels={currentLabelList} 
+                        setLabels={setCurrentLabelList}
+                        dueDate={currentDueDate}
+                        handleAddCurrentLabelList={handleAddCurrentLabelList} 
+                        handleDeleteCurrentLabelList={handleDeleteCurrentLabelList} 
+                        handleEditALabel={handleEditALabel} 
+                        handleEditDueDate={handleEditDueDate} />
                     }
                 </div>
             </div>

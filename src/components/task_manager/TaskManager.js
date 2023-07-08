@@ -3,7 +3,6 @@ import styles from './TaskManager.module.css';
 import TaskList from '../TaskList/TaskList';
 import * as FaIcons from "react-icons/fa";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import {v4 as uuidv4} from 'uuid';
 import roomApi from "../../api/roomApi";
 import { toast } from "react-toastify";
 
@@ -11,7 +10,6 @@ import { toast } from "react-toastify";
 const TaskManager = props => {
   const {roomId, taskManagerData, displayTaskManager, zIndex, ...others} = props;
   const [curZIndex, setCurZIndex] = useState(zIndex.task);
-
   const [taskLists, setTaskLists] = useState(taskManagerData);
   useEffect( () => {
     setTaskLists(taskManagerData);
@@ -21,13 +19,11 @@ const TaskManager = props => {
     setTaskLists(taskLists?.filter((taskList) => taskList.task_manager_id !== key))
   }
 
-  const [newTaskList, setNewTaskList] = useState({task_manager_id: uuidv4(), task_manager_title: 'New List', task_list: []});
   const handleAddTaskList = () => {
     const createTaskManager = async () =>{
       const response = await roomApi.createTaskManager({room_id: roomId, task_manager_title: 'New List'});
       if(response.status)
       {
-        setNewTaskList(response.data);
         if(taskLists !== undefined && taskLists !== null)
           setTaskLists([...taskLists, response.data]);
         else
@@ -38,16 +34,9 @@ const TaskManager = props => {
     }
     createTaskManager();
   };
-  // useEffect( () => {
-  //   if(taskLists !== undefined && taskLists !== null)
-  //     setTaskLists([...taskLists, newTaskList]);
-  //   else
-  //     setTaskLists([newTaskList]);
-  // }, [newTaskList]);
-  
   /**
-     * Drag drop motivational quote
-     */
+   * Drag drop motivational quote
+   */
   const [position, setPosition] = useState({ left: 50, top: 50 });
   const [dragging, setDragging] = useState(false);
   const [startPos, setStartPos] = useState({ x: 0, y: 0 });
@@ -123,6 +112,24 @@ const TaskManager = props => {
   useEffect( () =>{
     setCurrentTaskList(taskLists);
   },[taskLists]);
+
+  /**
+   * Label List of this room
+   */
+  const [thisRoomLabels, setThisRoomLabels] = useState([]);
+  useEffect( () => {
+    const fetchAllRoomLabels = async () =>{
+      const response = await roomApi.getLabelListByRoomId(roomId);
+      if(response.status)
+      {
+        setThisRoomLabels(response.data);
+      }
+      else
+        toast.error(response.message);
+    }
+    fetchAllRoomLabels();
+    // eslint-disable-next-line
+  }, []);
   return (
     <div className={styles.task_manager_container} style={{
       position: 'fixed',
@@ -160,6 +167,8 @@ const TaskManager = props => {
                       >
                         <TaskList
                           roomId={roomId}
+                          roomLabels = {thisRoomLabels}
+                          setRoomLabels = {setThisRoomLabels}
                           listIndex={listIndex}
                           key={taskList.task_manager_id}
                           keyTaskList={taskList.task_manager_id}

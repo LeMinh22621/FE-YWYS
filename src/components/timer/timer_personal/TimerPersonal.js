@@ -4,20 +4,32 @@ import * as BSIcons from 'react-icons/bs';
 import * as VSCIcons from 'react-icons/vsc';
 
 const TimerPersonal = props => {
+    
+    const {currentDropdownValue, isYourRoom, timeLineData, ...others} = props;
+    const [timeLine, setTimeLine] = useState(timeLineData);
     const labels = ['Focus', 'Break', 'Long Break'];
-    // eslint-disable-next-line
-    let {currentDropdownValue, timeLine, ...others} = props;
-    timeLine = currentDropdownValue === "Personal"?{
-        pomodoro_time: timeLine.pomodoro_time,
-        short_break: timeLine.short_break,
-        long_break:  timeLine.long_break,
-        loop_times: timeLine.loop_times 
-    }:{
-        pomodoro_time: timeLine.gr_pomodoro_time,
-        short_break: timeLine.gr_short_break,
-        long_break:  timeLine.gr_long_break,
-        loop_times: timeLine.gr_loop_times 
-    };
+    useEffect( () => {
+        if(timeLine !== null && timeLine !== undefined && Object.keys(timeLineData).length !== 0)
+        {
+            setTimeLine(currentDropdownValue === "Personal"?{
+                pomodoro_time: parseInt(timeLineData.pomodoro_time) * 60,
+                short_break: parseInt(timeLineData.short_break) * 60,
+                long_break:  parseInt(timeLineData.long_break) * 60,
+                loop_times: parseInt(timeLineData.loop_times)
+            }:{
+                pomodoro_time: parseInt(timeLineData.gr_pomodoro_time) * 60,
+                short_break: parseInt(timeLineData.gr_short_break) * 60,
+                long_break:  parseInt(timeLineData.gr_long_break) * 60,
+                loop_times: parseInt(timeLineData.gr_loop_times)
+            });
+        }
+        console.log(currentDropdownValue, timeLineData);
+    }, [timeLineData, currentDropdownValue]);
+
+    useEffect( () => {
+        console.log(timeLine);
+    }, [timeLine])
+
     const [currentLabel, SetCurrentLabel] = useState(labels[0]);
     const [counterTimer, SetCounterTimer] = useState(timeLine?.pomodoro_time);
     const [currentLoop, SetCurrentLoop] = useState(1);
@@ -92,7 +104,7 @@ const TimerPersonal = props => {
         else {
             clearInterval(interval);
         }
-
+        console.log(timeLine);
         return () => clearInterval(interval);
     }, [isRunning, currentLoop, currentLabel, counterTimer, timeLine]);
 

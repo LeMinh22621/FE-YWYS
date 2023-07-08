@@ -7,7 +7,7 @@ import BackgroundTheme from "../background_theme/BackgroundTheme";
 import BackgroundSlide from "../background_slide/BackgroundSlide";
 
 const BackgroundMenu = props => {
-    const {backgroundData, displayBackground, zIndex, ...others} = props;
+    const {isYourRoom, backgroundData, displayBackground, zIndex, ...others} = props;
     const [currentBackground, setCurrentBackground] = useState(backgroundData);
 
     const [selectedTheme, setSelectedTheme] = useState({});
@@ -132,17 +132,17 @@ const BackgroundMenu = props => {
             <div className={styles.header_container}>
                 <div className={styles.header_container_wrapper}>
                     <h1>Space</h1>
-                    <BackgroundTheme selectedTheme={selectedTheme} setSelectedTheme={setSelectedTheme} themes={themes} />
+                    <BackgroundTheme isYourRoom={isYourRoom} selectedTheme={selectedTheme} setSelectedTheme={setSelectedTheme} themes={themes} />
                 </div>
             </div>
             <div className={styles.background_menu_container_wrapper}>
-                <BackgroundSlide currentBackground={currentBackground} setCurrentBackground={setCurrentBackground} setBackgroundData={others.setBackgroundData} backgroundList = {backgroundList}/>
+                <BackgroundSlide isYourRoom={isYourRoom} currentBackground={currentBackground} setCurrentBackground={setCurrentBackground} setBackgroundData={others.setBackgroundData} backgroundList = {backgroundList}/>
 
                 <div className={styles.youtube_link_input_container}>
                     <h3>Youtube Link</h3>
                     <div className={styles.youtube_link_input_container_wrapper}>
-                        <input type="url" onChange={handleChangeVideoLink}/>
-                        <button type="button" onClick={handleOKClick}>OK</button>
+                        <input disabled={!isYourRoom} type="url" onChange={handleChangeVideoLink}/>
+                        <button disabled={!isYourRoom} type="button" onClick={handleOKClick}>OK</button>
                     </div>
                 </div>
             </div>

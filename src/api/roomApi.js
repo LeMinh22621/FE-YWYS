@@ -49,10 +49,6 @@ const roomApi = {
     /**
      * Task
      */
-    // getTaskListByTaskManagerId(taskManagerId, config)
-    // {
-    //     return http.get(`/room/task-list?task_manager_id`)
-    // },
     getTaskByID(taskId, config)
     {
         return http.get(`/room/task?task_id=${taskId}`, config);
@@ -89,7 +85,26 @@ const roomApi = {
      */
     getLabelListByRoomId(roomId, config)
     {
-        return http.get(`/room/labels?room_id=${roomId}`);
+        return http.get(`/room/labels?room_id=${roomId}`, config);
+    },
+    createLabel(taskId, data, config){
+        return http.post(`/room/create-label/${taskId}`, data, config);
+    },
+    deleteLabel(labelId, config){
+        return http.delete(`/room/delete-label/${labelId}`, config);
+    },
+    updateLabel(labelId, data, config){
+        return http.patch(`/room/update-label/${labelId}`, data, config);
+    },
+    /**
+     * TaskLabel
+     */
+    changeIsDeletedInTaskLabel(taskId, keyLabel, isDeleted, config){
+        return http.patch(`/room/task-labels/${taskId}/${keyLabel}/${isDeleted}`,null,config);
+    },
+    fetchLabelsOfTask(taskId, config)
+    {
+        return http.get(`/room/task-labels?task_id=${taskId}`, config);
     },
     /**
      * Theme
@@ -97,6 +112,6 @@ const roomApi = {
     getAllThemes(config)
     {
         return http.get(`/room/themes`, config);
-    }
+    },
 }
 export default roomApi;

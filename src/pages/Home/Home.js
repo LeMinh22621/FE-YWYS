@@ -65,6 +65,7 @@ const Home = props => {
     const fetchPubicRooms = async (setPublicRooms) =>{
       try{
         const response = await roomApi.getPublichRoomOrderByMembers();
+        console.log(response);
         setPublicRooms(response.data.reverse());
       }
       catch(err)

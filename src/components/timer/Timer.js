@@ -6,18 +6,25 @@ import TimerPersonal from "./timer_personal/TimerPersonal";
 import TimerSetting from "./timer_setting/TimerSetting";
 
 const Timer = props => {
-    const {displayTimer, timerData, zIndex, ...others} = props;
+    const {displayTimer, isYourRoom, timerData, zIndex, ...others} = props;
     const [curZIndex, setCurZIndex] = useState(zIndex.timer);
     const [currentDropdownValue, SetCurrentDropdownValue] = useState('Personal');
     const [isSettingClick, SetIsSettingClick] = useState(false);
 
-    const handleDropdownSelection = (str) => {
-        SetCurrentDropdownValue(str);
-        SetIsSettingClick(false);
-    }
     const handleSettingClick = () => {
         SetIsSettingClick(!isSettingClick);
     }
+    // set timer for personal or group
+    useEffect( () => {
+        !isYourRoom?SetCurrentDropdownValue('Group'):SetCurrentDropdownValue('Personal');
+    }, [isYourRoom]);
+    // disable setting button when u are not the host user room
+    const [isDisableSetting, setIsDisableSetting] = useState(false);
+
+    useEffect( () => {
+        console.log(isYourRoom, currentDropdownValue, !isYourRoom && currentDropdownValue === 'Group');
+        setIsDisableSetting(!isYourRoom && currentDropdownValue === 'Group');
+    }, [currentDropdownValue]);
     /**
      * Drag drop timer
      */
@@ -72,16 +79,20 @@ const Timer = props => {
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}>
             <div className={isSettingClick?styles.timer_container_wrapper_clicked:styles.timer_container_wrapper}>
-                <TimerHeader handleSettingClick={handleSettingClick} handleDropdownSelection={handleDropdownSelection} />
+                <TimerHeader 
+                isDisableSetting={isDisableSetting} 
+                currentDropdownValue={currentDropdownValue} 
+                handleSettingClick={handleSettingClick} 
+                SetCurrentDropdownValue={SetCurrentDropdownValue} />
 
                 <div className={styles.body_container}>
                     <div className={styles.body_container_wrapper}>
                         {
                             currentDropdownValue === "Personal" ?
 
-                                <TimerPersonal currentDropdownValue={currentDropdownValue} timeLine={timerData} />
+                                <TimerPersonal currentDropdownValue={currentDropdownValue} timeLineData={timerData} />
                                 :
-                                <TimerPersonal currentDropdownValue={currentDropdownValue} timeLine={timerData} />
+                                <TimerPersonal currentDropdownValue={currentDropdownValue} timeLineData={timerData} />
                         }
                     </div>
                 </div>

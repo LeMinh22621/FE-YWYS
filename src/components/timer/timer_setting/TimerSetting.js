@@ -5,6 +5,7 @@ import { useEffect } from "react";
 
 const TimerSetting = props => {
     const {currentDropdownValue, timeLine, ...others} = props;
+    console.log(timeLine);
     const currentTimeLine = currentDropdownValue === "Personal"?{
         pomodoro_time: timeLine.pomodoro_time,
         short_break: timeLine.short_break,
@@ -23,6 +24,7 @@ const TimerSetting = props => {
 
     const handleChange = (event, setFunc) => {
         let value = parseInt(event.target.value);
+        console.log(value);
         if(value <= 0)
             value = 0;
         setFunc(value);
@@ -63,7 +65,7 @@ const TimerSetting = props => {
                 <div className={styles.setting_time_line_container}>
                     <div className={styles.an_edit}>
                         <h3>Pomodoro</h3>
-                        <input value={focusTime} onChange={(event) => handleChange(event, SetFocusTime)} type="number" ></input>
+                        <input value={focusTime} onChange={(event) => handleChange(event, SetFocusTime)} type="number"></input>
                     </div>
                     <div className={styles.an_edit}>
                         <h3>Short Break</h3>

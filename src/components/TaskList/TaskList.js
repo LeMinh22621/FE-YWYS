@@ -7,7 +7,7 @@ import roomApi from '../../api/roomApi';
 import { toast } from 'react-toastify';
 
 const TaskList = props => {
-    const { roomId, listIndex, keyTaskList, section_title, tasks, ...others } = props;
+    const { roomId, listIndex, roomLabels, keyTaskList, section_title, tasks, ...others } = props;
 
     const [isActive, setIsActive] = useState(false);
     const [currentTaskList, setCurrentTaskList] = useState(tasks);
@@ -17,6 +17,7 @@ const TaskList = props => {
         roomApi.deleteTask(key)
             .then(response => {console.log(response); return response;})
             .then(response => {
+                console.log(response);
                 if(response.status)
                     setCurrentTaskList(currentTaskList.filter((task) => task.task_id !== key));
                 else
@@ -114,11 +115,12 @@ const TaskList = props => {
                                                             >
                                                                 <Task
                                                                     roomId={roomId}
+                                                                    setRoomLabels={others.setRoomLabels}
+                                                                    roomLabels = {roomLabels}
                                                                     key={task.task_id}
                                                                     keyTask={task.task_id}
                                                                     title={task.task_content}
                                                                     isDone={task.is_done}
-                                                                    labels={task.label_list}
                                                                     dueDate={dueDate}
                                                                     handleDeleteTask={handleDeleteTask}/>
                                                             </div>
