@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/FE-YWYS/static/css/main.204a4971.css",
+    "main.js": "/FE-YWYS/static/js/main.0bf2b2ee.js",
+    "index.html": "/FE-YWYS/index.html",
+    "main.204a4971.css.map": "/FE-YWYS/static/css/main.204a4971.css.map",
+    "main.0bf2b2ee.js.map": "/FE-YWYS/static/js/main.0bf2b2ee.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.204a4971.css",
+    "static/js/main.0bf2b2ee.js"
+  ]
+}
