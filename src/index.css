@@ -9,7 +9,7 @@ body {
   margin: 0;
   padding: 0;
   object-fit: cover;
-  background: url("../public/background.png");
+  background: url("./images/background.png");
 }
 
 @keyframes gradient {
