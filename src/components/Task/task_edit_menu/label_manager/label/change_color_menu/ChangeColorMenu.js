@@ -45,7 +45,10 @@ const ChangeColorMenu = props => {
                 {
                     colorList.map(
                         (cl) => (
-                            <div key={cl.key} onClick={handleChangeColor} style={{ backgroundColor: cl.color }} className={styles.color_item}>
+                            <div key={cl.key} 
+                                onClick={handleChangeColor} 
+                                style={{ backgroundColor: cl.color }} 
+                                className={styles.color_item}>
                                 {cl.colorName}
                             </div>
                         )

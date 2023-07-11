@@ -40,9 +40,16 @@ const AddBackgroundPopup = props => {
                     "Content-Type": "multipart/form-data"
                 }
             }
-        ).then((response) => response.json())
-        .then((dataResponse) => {
+        )
+        .then(dataResponse => {
+            if(dataResponse.status)
+            {
+                others.setCurrentBackgrounds([...currentBackgrounds, dataResponse.data])
+                others.setIsBackgroundAddClick(false);
+            }
+            
             console.log(dataResponse);
+            return dataResponse;
         }).catch( err => {
             toast.error(err);
         });

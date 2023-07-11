@@ -7,14 +7,16 @@ import roomApi from "../../api/roomApi";
 import authApi from "../../api/authApi";
 import { TOKEN_KEY } from '../../utils/auth';
 import { useEffect } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../../actions/LoginActions';
 import * as FaIcons from 'react-icons/fa';
 import NewRoomForm from '../../components/new_room_form/NewRoomForm';
+import DetailUser from '../../components/detail_user/DetailUser';
 
 const Home = props => {
   const loggedIn = useSelector((state) => state.login);
+  const [urls, setUrls] = useState([]);
   const [user, setUser] = useState(loggedIn.user);
   const [myRoomList, setMyRoomList] = useState([]);
   const [publicRooms, setPublicRooms] = useState([]);
@@ -74,6 +76,7 @@ const Home = props => {
       }
     }
     fetchPubicRooms(setPublicRooms);
+    // eslint-disable-next-line
   }, [user]);
 
   const handleLogout = async () =>{
@@ -86,6 +89,25 @@ const Home = props => {
     }
   }
 
+  // handle Detail user
+  const [isShowDetailUser, setIsShowDetailUser] = useState(false);
+  const handleShowUserDetail = () => {
+    setIsShowDetailUser(!isShowDetailUser);
+  }
+  //
+  useEffect(() => {
+    publicRooms.map(
+      data => {
+        roomApi.getUserAvatar(data.user_id).then(
+          rrr => 
+            setUrls([...urls, rrr.data.url_avatar])
+        ).catch(err => toast.error(err));
+        return data; 
+      }
+    );
+    console.log(publicRooms);
+  },[publicRooms]);
+  console.log(urls);
   return (
     <div className={styles.home_page_container}>
       <div className={styles.home_page_container_wrapper}>
@@ -101,7 +123,7 @@ const Home = props => {
                 {
                   isAvatarClick && (
                     <div className={styles.avatar_menu}>
-                      <span>Profile</span>
+                      <span onClick={handleShowUserDetail}>Profile</span>
                       <span onClick={handleLogout}>Logout</span>
                     </div>
                   )
@@ -129,12 +151,27 @@ const Home = props => {
               <h1>Public Room</h1>
               <div className={styles.my_room_list_container}>
                 {
-                  publicRooms?.map((roomItem) => <RoomItem isPublicRoomItem={true} key={roomItem?.room_id} myRoomList={myRoomList} setMyRoomList={setMyRoomList} roomId={roomItem?.room_id} avatar={user?.url_avatar} title={roomItem?.title} description={roomItem?.description} members={roomItem?.members} backgroundImage={roomItem.background.image_link}/>)
+                  publicRooms?.map((roomItem, index) => {
+                    return <RoomItem 
+                    isPublicRoomItem={true}
+                    key={roomItem?.room_id}
+                    myRoomList={myRoomList} 
+                    setMyRoomList={setMyRoomList} 
+                    roomId={roomItem?.room_id} 
+                    avatar={urls[index]} 
+                    title={roomItem?.title} 
+                    description={roomItem?.description}
+                    members={roomItem?.members}
+                    backgroundImage={roomItem.background.image_link}/>
+                })
                 }
               </div>
           </div>
         </div>
       </div>
+      {
+        isShowDetailUser && <DetailUser cancelFunc = {setIsShowDetailUser}/>
+      }
     </div>
   );
 }

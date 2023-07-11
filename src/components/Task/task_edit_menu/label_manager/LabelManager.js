@@ -58,6 +58,9 @@ const LabelManager = props => {
                 <div className={styles.label_list}>
                     {
                         roomLabels?.map( (label) => (<Label 
+                            roomId={roomId}
+                            roomLabels={roomLabels}
+                            setRoomLabels={other.setRoomLabels}
                             setCurrentLabelList={other.setCurrentLabelList}
                             key={label.label_id} taskId={taskId} 
                             keyLabel={label.label_id} 

@@ -6,6 +6,7 @@ class Http{
     {
         this.instance = axios.create(
             {
+                // baseURL: 'http://34.87.50.56/api/v1',
                 baseURL: 'http://localhost:8089/api/v1',
                 // baseURL: 'http://10.20.2.7:8089/api/v1',
                 // baseURL:'http://192.168.1.17:8089/api/v1',

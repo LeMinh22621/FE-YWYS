@@ -130,6 +130,9 @@ const TaskManager = props => {
     fetchAllRoomLabels();
     // eslint-disable-next-line
   }, []);
+  useEffect(() => {
+    console.log(thisRoomLabels);
+  }, [thisRoomLabels])
   return (
     <div className={styles.task_manager_container} style={{
       position: 'fixed',

@@ -84,7 +84,7 @@
   height: 100%;
   width: 100%;
   border-radius: 50%;
-  background-image: url("https://lhmfrontend.s3.amazonaws.com/default-avatar.jpg");
+  background-image: url("https://ywys.s3.amazonaws.com/image/default-avatar.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -98,6 +98,7 @@
   gap: 10px;
   flex-wrap: nowrap;
   position: fixed;
+  z-index: 9999;
   top: 10vh;
   left: 89vw;
 }
@@ -119,8 +120,6 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 .avatar_container_wrapper:hover{
-  background: #000c;
-  color: #fff;
   text-decoration: none;
   transform: translateX(5px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);

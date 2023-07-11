@@ -113,5 +113,12 @@ const roomApi = {
     {
         return http.get(`/room/themes`, config);
     },
+    /**
+     * User
+     */
+    getUserAvatar(userId, config)
+    {
+        return http.get(`/room/user?user_id=${userId}`, config);
+    }
 }
 export default roomApi;

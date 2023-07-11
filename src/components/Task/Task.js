@@ -56,11 +56,17 @@ const Task = props => {
     }, []);
 
     // label list
-    const handleEditALabel = (key, newColor) => {
-        const labelIndex = currentLabelList?.findIndex((label) => label.label_id === key);
+    const handleEditALabel = (key, newLable) => {
+        const labelIndex = currentLabelList.indexOf(currentLabelList.filter(label => label.label_id === key)[0]);
+
+        console.log(labelIndex, key, newLable, currentLabelList);
         if (labelIndex !== -1) {
-            currentLabelList[labelIndex].color = newColor;
+            currentLabelList[labelIndex].color = newLable.color;
+            currentLabelList[labelIndex].name = newLable.name;
+
+            setCurrentLabelList([...currentLabelList]);
         }
+
     }
     const handleAddCurrentLabelList = (newLabel) => {
         setCurrentLabelList([...currentLabelList, newLabel]);
@@ -109,13 +115,13 @@ const Task = props => {
         if(currentLabelList != null && roomLabels != null)
         {
             let intersection = [];
-            for (let i = 0; i < currentLabelList.length; i++) {
-                const found = roomLabels.find(function (element) {
-                    return element.label_id === currentLabelList[i].label_id;
+            for (let i = 0; i < roomLabels.length; i++) {
+                const found = currentLabelList.find(function (element) {
+                    return element.label_id === roomLabels[i].label_id;
                 });
                 
                 if (found) {
-                intersection.push(currentLabelList[i]);
+                intersection.push(roomLabels[i]);
                 }
             }
             setCurrentLabelList(intersection);

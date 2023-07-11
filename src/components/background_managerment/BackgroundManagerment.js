@@ -211,6 +211,7 @@ const BackgroundManagerment = props => {
         isBackgroundAddClick && <AddBackgroundPopup
           currentTheme={currentTheme}
           currentBackgrounds={currentBackgrounds}
+          setCurrentBackgrounds={setCurrentBackgrounds}
           setIsBackgroundAddClick={setIsBackgroundAddClick}
         />
       }

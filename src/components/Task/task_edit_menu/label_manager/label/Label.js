@@ -7,7 +7,7 @@ import roomApi from "../../../../../api/roomApi";
 import { toast } from "react-toastify";
 
 const Label = props => {
-    const {keyLabel, taskId, isSelected, color, title, ...other} = props;
+    const {keyLabel, roomLabels, roomId, taskId, isSelected, color, title, ...other} = props;
     const [currentSelected, setCurrentSelected] = useState(isSelected);
     const [currentTitle, setCurrentTitle] = useState(title);
     const [currentColor, setCurrentColor] = useState(color);
@@ -16,7 +16,6 @@ const Label = props => {
     const handleChangeColor = (color) => {
         setCurrentColor(color);
         setIsEditLabel(true);
-        other.handleEditALabel(keyLabel, color);
     }
     const handleChangeColorButtonClick = () => {
         setIsChangeColorClick(!isChangeColorClick);
@@ -63,7 +62,12 @@ const Label = props => {
             console.log(response);
             if(response.return_code === 200)
             {
-                other.handleEditALabel(response.data.label_id, currentColor);
+                other.handleEditALabel(response.data.label_id, response.data);
+                const index = roomLabels.indexOf(roomLabels.filter(label => label.label_id === response.data.label_id)[0]);
+                roomLabels[index].name = response.data.name;
+                roomLabels[index].color = response.data.color;
+                console.log(roomLabels[index]);
+                other.setRoomLabels([...roomLabels])
             }
             else
                 toast.error(response.message);
@@ -83,7 +87,10 @@ const Label = props => {
                         <input type="text" onChange={handleTitleChange} value={currentTitle}/>
                     </div>
                     {
-                        isChangeColorClick && <ChangeColorMenu keyLabel={keyLabel} handleChangeColor={handleChangeColor} handleEditALabel={other.handleEditALabel}/>
+                        isChangeColorClick && <ChangeColorMenu 
+                            keyLabel={keyLabel} 
+                            handleChangeColor={handleChangeColor} 
+                            handleEditALabel={other.handleEditALabel}/>
                     }
                 </div>
                 <button className={styles.delete_button}> <FaIcons.FaTrash className={styles.delete_icon} size={20} onClick={handleDeleteLable}/> </button>
