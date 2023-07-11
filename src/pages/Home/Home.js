@@ -16,6 +16,7 @@ import DetailUser from '../../components/detail_user/DetailUser';
 
 const Home = props => {
   const loggedIn = useSelector((state) => state.login);
+  const [publicUserId, setPublicUserId] = useState([]);
   const [urls, setUrls] = useState([]);
   const [user, setUser] = useState(loggedIn.user);
   const [myRoomList, setMyRoomList] = useState([]);
@@ -30,12 +31,12 @@ const Home = props => {
      * 
      * Fetch User
      */
-    const fetchUser = async (setUser) => {
+    const fetchUser = async () => {
       try{
         const token = localStorage.getItem(TOKEN_KEY);
         const response = await authApi.checkExpiredToken(token);
+        console.log(response.data)
         setUser(response.data);
-        // eslint-disable-next-line
       }
       catch(err)
       {
@@ -43,7 +44,7 @@ const Home = props => {
       }
     }
     if(user == null)
-      fetchUser(setUser);
+      fetchUser();
     /**
      * 
      * Fetch My Room List
@@ -64,10 +65,16 @@ const Home = props => {
      * 
      * Fetch public Rooms
      */
-    const fetchPubicRooms = async (setPublicRooms) =>{
+    const fetchPubicRooms = async () =>{
+      if(user === undefined || user === null)
+        return;
       try{
         const response = await roomApi.getPublichRoomOrderByMembers();
         console.log(response);
+        setPublicUserId(response.data.map(
+          room => room.user_id
+        ).reverse());
+
         setPublicRooms(response.data.reverse());
       }
       catch(err)
@@ -94,20 +101,19 @@ const Home = props => {
   const handleShowUserDetail = () => {
     setIsShowDetailUser(!isShowDetailUser);
   }
-  //
-  useEffect(() => {
-    publicRooms.map(
-      data => {
-        roomApi.getUserAvatar(data.user_id).then(
-          rrr => 
-            setUrls([...urls, rrr.data.url_avatar])
-        ).catch(err => toast.error(err));
-        return data; 
+  useEffect( () => {
+    const getUserAvatar = async () => {
+      console.log(publicUserId)
+      const response = await roomApi.getUserAvatar(JSON.stringify(publicUserId));
+
+      if(response.return_code === 200)
+      {
+        console.log(response.data);
+        setUrls(response.data);
       }
-    );
-    console.log(publicRooms);
-  },[publicRooms]);
-  console.log(urls);
+    }
+    getUserAvatar();
+  }, [publicUserId]);
   return (
     <div className={styles.home_page_container}>
       <div className={styles.home_page_container_wrapper}>
@@ -158,7 +164,7 @@ const Home = props => {
                     myRoomList={myRoomList} 
                     setMyRoomList={setMyRoomList} 
                     roomId={roomItem?.room_id} 
-                    avatar={urls[index]} 
+                    avatar={urls[index]?.url_avatar} 
                     title={roomItem?.title} 
                     description={roomItem?.description}
                     members={roomItem?.members}
@@ -170,7 +176,7 @@ const Home = props => {
         </div>
       </div>
       {
-        isShowDetailUser && <DetailUser cancelFunc = {setIsShowDetailUser}/>
+        isShowDetailUser && <DetailUser userData = {user} cancelFunc = {setIsShowDetailUser}/>
       }
     </div>
   );

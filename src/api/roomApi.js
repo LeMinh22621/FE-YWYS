@@ -116,9 +116,9 @@ const roomApi = {
     /**
      * User
      */
-    getUserAvatar(userId, config)
+    getUserAvatar(userIds, config)
     {
-        return http.get(`/room/user?user_id=${userId}`, config);
+        return http.post(`/room/user`, userIds, config);
     }
 }
 export default roomApi;

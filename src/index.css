@@ -3,11 +3,13 @@ body {
   width: 100vw; */
   align-items: center;
   font: 14px/18px "Helvetica Neue", Arial, Helvetica, sans-serif;
-  background: linear-gradient(45deg, #d8bdae, #aabee3, #8bd4ac, #a4e3ee);
+  background: linear-gradient(-45deg, #3e3530, #2552a6, #19b961, #0d9ab4);
   background-size: 1000% 1000%;
-  animation: gradient 10s ease infinite;
+  animation: gradient 60s ease infinite;
   margin: 0;
   padding: 0;
+  object-fit: cover;
+  background: url("../public/background.png");
 }
 
 @keyframes gradient {

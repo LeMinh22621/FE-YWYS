@@ -14,7 +14,6 @@ export const AdminRequire = ({children}) => {
 export const UserRequire = ({children}) => {
 
     const userInf = decodeToken(getToken());
-    console.log(userInf);
     if(userInf.role === "USER")
         return children;
     else
